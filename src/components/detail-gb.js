@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Image, Linking } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Image, Linking } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 import serviceYouni from '../api';
@@ -42,7 +42,7 @@ const DetailScreen = ({ route }) => {
     }
     return (
 
-        <View style={styles.view} >
+        <ScrollView style={styles.view} >
             <Text style={styles.title}>{_params.title}</Text>
             {/* 作者信息 */}
             <View style={styles.author}>
@@ -61,7 +61,7 @@ const DetailScreen = ({ route }) => {
 
             {/* 内容详情 */}
             {contentView}
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
         color: "#999",
         fontWeight: "bold"
     },
-    contentView2:{
-        paddingVertical:20,
-        fontSize:18
+    contentView2: {
+        paddingVertical: 20,
+        fontSize: 18
     }
 });
 
