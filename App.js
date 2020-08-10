@@ -12,6 +12,10 @@ import HomeScreen from './src/pages/home';
 import ChatScreen from './src/pages/chat';
 import MyScreen from './src/pages/my';
 import DetailGBScreen from './src/components/detail-gb';
+/**登录页面 */
+import SignInPage from './src/pages/signIn';
+/**注册页面 */
+import SignUpPage from './src/pages/signUp';
 
 /**修改tabs的标题 */
 function getHeaderTitle(route) {
@@ -67,14 +71,48 @@ function TabsStackScreen({ navigation, route }) {
   );
 }
 
+/**嵌套组件 */
+/**用户验证页面 */
+const authScreens = {
+  SignIn: SignInPage,
+  SignUp: SignUpPage,
+};
+
+/**业务组件 */
+const userScreens = {
+  Tabs: TabsStackScreen,
+  Home: HomeScreen,
+};
+
+
 const RootStack = createStackNavigator();
 export default function App() {
+  let isLoggedIn = false;
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Tabs">
+      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
         <RootStack.Screen name="Tabs" component={TabsStackScreen} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
+        <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
+     
       </RootStack.Navigator>
     </NavigationContainer>
+
+
+    /**后面页面多了要用下面方式 */
+    // <NavigationContainer>
+    //   <RootStack.Navigator>
+    //     {Object.entries({
+    //       // Use the screens normally
+    //       // ...commonScreens,
+    //       // Use some screens conditionally based on some condition
+    //       ...(isLoggedIn ? userScreens : authScreens),
+    //     }).map(([name, component]) => (
+    //       <RootStack.Screen name={name} component={component} />
+    //     ))}
+    //   </RootStack.Navigator>;
+    // </NavigationContainer>
+
   );
 }
