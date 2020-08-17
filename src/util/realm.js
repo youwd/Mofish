@@ -34,7 +34,7 @@ const instance = new Realm({
 
 
 /***表使用区**/
-export function writeToRealm(obj,tabName) {
+export function writeToRealm(obj, tabName) {
     return new Promise((resolve, reject) => {
         instance.write(() => {
             instance.create(tabName, obj, true)
@@ -63,7 +63,7 @@ export function clearAllFromRealm(tabName) {
 }
 
 
-export function clearRowFromRealm(id,tabName) {
+export function clearRowFromRealm(id, tabName) {
     return new Promise((resolve, reject) => {
         instance.write(() => {
             let arrays = instance.objects(tabName);
@@ -72,4 +72,8 @@ export function clearRowFromRealm(id,tabName) {
             resolve(true)
         })
     })
+}
+
+export function realmDBPath() {
+    // console.log(instance.path);
 }

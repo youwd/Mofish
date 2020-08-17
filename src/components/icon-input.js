@@ -44,6 +44,7 @@ const IconInput = (
         setSecondLabel(_seconds, `重新获取(${_seconds}s)`);
 
     };
+
     let timerID;
     const getVerification = () => {
         // 执行定时
@@ -56,6 +57,7 @@ const IconInput = (
             }, 1000);
         }
     }
+
     useEffect(() => {
         return () => {
             if (timerID) { clearInterval(timerID) }

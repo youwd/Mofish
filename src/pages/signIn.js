@@ -104,17 +104,17 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginLeft: 30,
-        marginTop: 60,
+        marginTop: "15%",
     },
     input1Style: {
-        width: 250,
-        marginTop: "30%",
+        width: "60%",
+        marginTop: "20%",
         marginLeft: 30
     },
     signUpForgetPwd: {
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingVertical: 30,
+        paddingVertical: 25,
         paddingHorizontal: 10,
     },
     signUpText: {

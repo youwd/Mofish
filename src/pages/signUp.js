@@ -7,6 +7,17 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 
+// 数据库模块
+import {
+    HistoryTableName,
+    CityTableName,
+    clearAllFromRealm,
+    queryAllFromRealm,
+    writeToRealm,
+    clearRowFromRealm,
+    realmDBPath
+} from "../util/realm";
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from '../components/icon-input';
 import ButtonSign from '../components/button-sign';
@@ -16,8 +27,31 @@ import IconQuickLogin from '../components/icon-quicklogin';
 const SignUpPage = ({ navigation }) => {
     const [account, setAccount] = useState();
 
+
+    const _readAllData = () => {
+        queryAllFromRealm(HistoryTableName).then((list) => {
+            for (let key in list) {
+                console.log(list[key].name);
+            }
+        });
+    }
+
     const loginClick = () => {
         console.log(111);
+        realmDBPath();
+        
+        clearAllFromRealm(HistoryTableName);
+
+        let row1 = { "id": 1, "name": "战狼1" };
+        writeToRealm(row1, HistoryTableName).then(() => {
+            // ToastAndroid.show('写入完成1', ToastAndroid.SHORT);
+        });
+        let row2 = { "id": 2, "name": "战狼2" };
+        writeToRealm(row2, HistoryTableName).then(() => {
+            // ToastAndroid.show('写入完成2', ToastAndroid.SHORT);
+        });
+
+        _readAllData();
     }
 
     return (
@@ -61,7 +95,10 @@ const SignUpPage = ({ navigation }) => {
 
                                 <View style={styles.checkView}>
                                     <AntDesign name="checkcircle" size={18} color="#715ece" />
-                                    <Text style={{ marginLeft: 5 }}>
+                                    <Text style={{
+                                        marginLeft: 5,
+                                        lineHeight: 25
+                                    }}>
                                         我已同意
                                         <Text style={styles.checkUrl}>《韭菜服务协议》</Text>与
                                         <Text style={styles.checkUrl}>《隐私协议》</Text>
@@ -109,7 +146,7 @@ const styles = StyleSheet.create({
     },
     signTitle: {
         marginLeft: 10,
-        marginTop: 60,
+        marginTop: "10%",
         flexDirection: "row"
     },
     signText: {
@@ -125,10 +162,9 @@ const styles = StyleSheet.create({
     },
     checkView: {
         flexDirection: "row",
-
     },
-    checkUrl:{
-        color:"#3830a8"
+    checkUrl: {
+        color: "#3830a8"
     },
     quickLogin: {
         position: "absolute",
