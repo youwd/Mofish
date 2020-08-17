@@ -7,32 +7,49 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import { CommonActions } from '@react-navigation/native';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from '../components/icon-input';
 import ButtonSign from '../components/button-sign';
 import IconQuickLogin from '../components/icon-quicklogin';
-
+import IconInputPassword from '../components/icon-input-password';
+import serviceYouni from '../api'
 
 const SignInPage = ({ navigation }) => {
     const [account, setAccount] = useState();
+    const [password, setPassword] = useState();
+    const [eyeOff, setEyeOff] = useState(true);
 
     const loginClick = () => {
-        // 路由到tabs主页面
-        // navigation.reset({
-        //     routes: [{ name: 'Tabs' }],
-        // });
-
-        console.log(111);
+        const params = {
+            account: account,
+            password: password
+        }
+        serviceYouni("login", params)
+            .then((res) => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        {
+                          name: 'Tabs',
+                          params: { user: 'jane' },
+                        },
+                      ],
+                    })
+                  );
+            }, (error) => {
+                console.log("刷新失败");
+            });
     }
-
-
 
     return (
         <>
             <StatusBar barStyle="light-content" translucent={true} />
             <SafeAreaView style={styles.signinViewUp}></SafeAreaView>
             <SafeAreaView>
-                <ImageBackground source={require('../assets/images/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
+                <ImageBackground source={require('../assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
                     <ScrollView scrollEnabled={false}>
                         <View style={styles.inputView}>
                             {/* 标题 */}
@@ -47,15 +64,17 @@ const SignInPage = ({ navigation }) => {
                                     keyboardType="number-pad"
                                 />
 
-                                <IconInput
-                                    value={account}
-                                    ChangeText={setAccount}
+                                <IconInputPassword
+                                    value={password}
+                                    ChangeText={setPassword}
                                     placeholder="请输入密码"
-                                    iconName="lock-closed-sharp"
+                                    eyeOff={eyeOff}
+                                    setEyeOff={setEyeOff}
                                 />
+
                             </View>
 
-                            <ButtonSign label="立即登录" loginClick={loginClick}></ButtonSign>
+                            <ButtonSign label="立即登录" click={loginClick}></ButtonSign>
 
                             <View style={styles.signUpForgetPwd}>
                                 <Text style={styles.signUpText} onPress={() => { navigation.push('Signup') }}>没有账号？立即注册</Text>
@@ -129,9 +148,10 @@ const styles = StyleSheet.create({
         right: 30,
     },
     quickLoginTitle: {
-        color: "#fbfbfb",
+        color: "#c0c6c9",
         paddingVertical: 30,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: 12
 
     },
     quickLoginItem: {

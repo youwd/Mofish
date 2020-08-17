@@ -18,40 +18,47 @@ import {
     realmDBPath
 } from "../util/realm";
 
+import { CommonActions } from '@react-navigation/native';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from '../components/icon-input';
 import ButtonSign from '../components/button-sign';
 import IconQuickLogin from '../components/icon-quicklogin';
+import IconInputPassword from '../components/icon-input-password';
+
+import serviceYouni from '../api'
 
 
 const SignUpPage = ({ navigation }) => {
     const [account, setAccount] = useState();
+    const [password, setPassword] = useState();
+    const [eyeOff, setEyeOff] = useState(true);
 
 
-    const _readAllData = () => {
-        queryAllFromRealm(HistoryTableName).then((list) => {
-            for (let key in list) {
-                console.log(list[key].name);
-            }
-        });
-    }
+    const registryClick = () => {
+        const params = {
+            nickName: "12312",
+            phone: account,
+            password: password,
+            userName: account
+        }
+        serviceYouni("registry", params)
+            .then((res) => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            {
+                                name: 'Tabs',
+                                params: { user: 'jane' },
+                            },
+                        ],
+                    })
+                );
+            }, (error) => {
+                console.log("刷新失败");
+            });
 
-    const loginClick = () => {
-        console.log(111);
-        realmDBPath();
-        
-        clearAllFromRealm(HistoryTableName);
-
-        let row1 = { "id": 1, "name": "战狼1" };
-        writeToRealm(row1, HistoryTableName).then(() => {
-            // ToastAndroid.show('写入完成1', ToastAndroid.SHORT);
-        });
-        let row2 = { "id": 2, "name": "战狼2" };
-        writeToRealm(row2, HistoryTableName).then(() => {
-            // ToastAndroid.show('写入完成2', ToastAndroid.SHORT);
-        });
-
-        _readAllData();
     }
 
     return (
@@ -59,7 +66,7 @@ const SignUpPage = ({ navigation }) => {
             <StatusBar barStyle="light-content" translucent={true} />
             <SafeAreaView style={styles.signinViewUp}></SafeAreaView>
             <SafeAreaView>
-                <ImageBackground source={require('../assets/images/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
+                <ImageBackground source={require('../assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
                     <ScrollView scrollEnabled={false}>
                         <View style={styles.inputView}>
                             {/* 标题 */}
@@ -86,11 +93,12 @@ const SignUpPage = ({ navigation }) => {
                                     keyboardType="number-pad"
                                     isVerification={true}
                                 />
-                                <IconInput
-                                    value={account}
-                                    ChangeText={setAccount}
+                                <IconInputPassword
+                                    value={password}
+                                    ChangeText={setPassword}
                                     placeholder="请输入密码"
-                                    iconName="lock-closed-sharp"
+                                    eyeOff={eyeOff}
+                                    setEyeOff={setEyeOff}
                                 />
 
                                 <View style={styles.checkView}>
@@ -106,7 +114,7 @@ const SignUpPage = ({ navigation }) => {
                                 </View>
                             </View>
 
-                            <ButtonSign label="立即注册" loginClick={loginClick}></ButtonSign>
+                            <ButtonSign label="立即注册" click={registryClick}></ButtonSign>
                         </View>
 
                     </ScrollView>
@@ -172,10 +180,10 @@ const styles = StyleSheet.create({
         right: 30,
     },
     quickLoginTitle: {
-        color: "#fbfbfb",
+        color: "#c0c6c9",
         paddingVertical: 30,
-        textAlign: "center"
-
+        textAlign: "center",
+        fontSize: 12
     },
     quickLoginItem: {
         flexDirection: "row",

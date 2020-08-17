@@ -1,6 +1,13 @@
 import axios from 'axios';
 import serviceURL from './url';
 
+/**
+ * 
+ * @param {*} type 请求类型：GET、PUT、DELETE、POST等
+ * @param {*} data 请求数据
+ * @param {*} headers 请求头
+ * @param {*} id 若有id 这表示是id直接跟在路径后面形式
+ */
 const serviceYouni = (type, data = {}, headers = {}, id = 'no') => {
 
     const _service = serviceURL[type];
@@ -23,7 +30,7 @@ const serviceYouni = (type, data = {}, headers = {}, id = 'no') => {
     return new Promise((resolve, reject) => {
         axios(config).then((res) => {
             // console.log(config,res.data)
-            if (res.data.code === 200) {
+            if (res.data.code.toString() === '200') {
                 resolve(res.data.data);
             } else {
                 reject(res.data.des);

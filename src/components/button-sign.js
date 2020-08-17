@@ -3,10 +3,10 @@ import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /**登录注册按钮 */
-const ButtonSign = ({ label, loginClick }) => {
+const ButtonSign = ({ label, click }) => {
     return (
         <View style={styles.buttonStyle}>
-            <TouchableOpacity activeOpacity={0.5} onPress={loginClick}>
+            <TouchableOpacity activeOpacity={0.5} onPress={click}>
                 <View style={styles.buttonTouchable}>
                     {/* <View style={styles.buttonStyle1}>
                         <Text style={styles.buttonText}>{label}</Text>

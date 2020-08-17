@@ -7,7 +7,7 @@ const IconInput = (
         ChangeText, value, autoFocus = false, keyboardType = "default",
         placeholder, iconName = "chatbubbles", iconSize = 20,
         iconColor = "#3a2baf",
-        isVerification = false
+        isVerification = false,
     }
 ) => {
     /**是否点了获取验证码按钮 */
@@ -16,10 +16,9 @@ const IconInput = (
     const [verificationTextColor, setVerificationTextColor] = useState("#463cae");
 
 
-
     const verificationView = isVerification ?
         <View style={styles.verificationStyle}>
-            <Text style={{ color: verificationTextColor }} onPress={() => getVerification()}>{verifText}</Text>
+            <Text style={{ fontSize: 12, color: verificationTextColor }} onPress={() => getVerification()}>{verifText}</Text>
         </View> : null;
 
     /**设置按钮文本与秒数 */
@@ -27,7 +26,6 @@ const IconInput = (
         setSeconds(second);
         setVerifText(label);
     }
-
 
     // 倒计时方法
     const tick = (timerID, _seconds) => {
@@ -63,6 +61,7 @@ const IconInput = (
             if (timerID) { clearInterval(timerID) }
         }
     }, [isVerification]);
+
     return (
         <View style={styles.inputStyle}>
             <Ionicons name={iconName} size={iconSize} color={iconColor} />
@@ -90,14 +89,20 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 14,
-        height: 35,
-        marginLeft: 10
+        marginLeft: 10,
+        minWidth: "50%"
     },
     verificationStyle: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "flex-end",
     },
+
+    passwordStyle: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+    }
 })
 
 

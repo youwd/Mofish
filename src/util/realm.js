@@ -74,6 +74,29 @@ export function clearRowFromRealm(id, tabName) {
     })
 }
 
+const _readAllData = () => {
+    queryAllFromRealm(HistoryTableName).then((list) => {
+        for (let key in list) {
+            console.log(list[key].name);
+        }
+    });
+}
+
 export function realmDBPath() {
     // console.log(instance.path);
+
+    realmDBPath();
+        
+    clearAllFromRealm(HistoryTableName);
+
+    let row1 = { "id": 1, "name": "战狼1" };
+    writeToRealm(row1, HistoryTableName).then(() => {
+        // ToastAndroid.show('写入完成1', ToastAndroid.SHORT);
+    });
+    let row2 = { "id": 2, "name": "战狼2" };
+    writeToRealm(row2, HistoryTableName).then(() => {
+        // ToastAndroid.show('写入完成2', ToastAndroid.SHORT);
+    });
+
+    _readAllData();
 }
