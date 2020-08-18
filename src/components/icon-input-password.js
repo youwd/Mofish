@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderColor: '#e6e3f6',
         borderBottomWidth: 1,
-        marginBottom: 40
+        paddingBottom: 5,
+        marginBottom: 28
     },
     inputText: {
         fontSize: 14,
         marginLeft: 10,
-        width: "70%",
-    },
+        width: "70%",    },
 
     passwordStyle: {
         flex: 1,

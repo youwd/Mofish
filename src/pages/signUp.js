@@ -105,7 +105,7 @@ const SignUpPage = ({ navigation }) => {
                                     <AntDesign name="checkcircle" size={18} color="#715ece" />
                                     <Text style={{
                                         marginLeft: 5,
-                                        lineHeight: 25
+                                        lineHeight: 18
                                     }}>
                                         我已同意
                                         <Text style={styles.checkUrl}>《韭菜服务协议》</Text>与
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     },
     checkView: {
         flexDirection: "row",
+        // alignItems:"center"
     },
     checkUrl: {
         color: "#3830a8"

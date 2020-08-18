@@ -41,7 +41,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#6352c4",
         borderRadius: 35,
         height: "100%",
-
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
     buttonStyle1: {
         flexDirection: "row",

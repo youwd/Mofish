@@ -4,8 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const IconInput = (
     {
-        ChangeText, value, autoFocus = false, keyboardType = "default",
-        placeholder, iconName = "chatbubbles", iconSize = 20,
+        ChangeText, value,
+        autoFocus = false,
+        keyboardType = "default",
+        placeholder,
+        borderColor = "#e6e3f6",
+        placeholderTextColor,
+        fontColor = "#000",
+        iconName = "chatbubbles",
+        iconSize = 20,
         iconColor = "#3a2baf",
         isVerification = false,
     }
@@ -63,14 +70,15 @@ const IconInput = (
     }, [isVerification]);
 
     return (
-        <View style={styles.inputStyle}>
+        <View style={[styles.inputStyle, { borderColor: borderColor }]}>
             <Ionicons name={iconName} size={iconSize} color={iconColor} />
             <TextInput
                 autoFocus={autoFocus}
-                style={styles.inputText}
+                style={[styles.inputText, { color: fontColor }]}
                 onChangeText={text => ChangeText(text)}
                 value={value}
                 placeholder={placeholder}
+                placeholderTextColor={placeholderTextColor}
                 keyboardType={keyboardType}
                 returnKeyType={"done"}
             />
@@ -83,14 +91,14 @@ const styles = StyleSheet.create({
     inputStyle: {
         flexDirection: "row",
         alignItems: "center",
-        borderColor: '#e6e3f6',
+        paddingBottom: 5,
         borderBottomWidth: 1,
         marginBottom: 40
     },
     inputText: {
         fontSize: 14,
         marginLeft: 10,
-        minWidth: "50%"
+        minWidth: "50%",
     },
     verificationStyle: {
         flex: 1,

@@ -15,4 +15,14 @@ function FromNow(time) {
     return result;
 }
 
-module.exports = { FromNow };
+/**
+ * 格式化时间
+ * @param {*} time 格式化的时间
+ * @param {*} type 要输出的格式类型 'YYYY-MM-DD'
+ */
+function Format(time, type) {
+    console.log(111);
+    return dayjs(time).format(type);
+}
+
+module.exports = { FromNow, Format };

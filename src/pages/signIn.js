@@ -9,7 +9,6 @@ import {
 
 import { CommonActions } from '@react-navigation/native';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from '../components/icon-input';
 import ButtonSign from '../components/button-sign';
 import IconQuickLogin from '../components/icon-quicklogin';

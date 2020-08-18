@@ -16,6 +16,9 @@ import DetailGBScreen from './src/components/detail-gb';
 import SignInPage from './src/pages/signIn';
 /**注册页面 */
 import SignUpPage from './src/pages/signUp';
+/**完善个人资料 */
+import ImproveImformationPage from './src/pages/improveImformation';
+
 
 /**修改tabs的标题 */
 function getHeaderTitle(route) {
@@ -90,12 +93,12 @@ export default function App() {
   let isLoggedIn = false;
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
+      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'improveImformation'}>
         <RootStack.Screen name="Tabs" component={TabsStackScreen} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
         <RootStack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
-     
+        <RootStack.Screen name="improveImformation" component={ImproveImformationPage} options={{ headerShown: false }} />
       </RootStack.Navigator>
     </NavigationContainer>
 
