@@ -4,6 +4,25 @@ import Realm from 'realm';
 export const HistoryTableName = 'History';
 export const CityTableName = 'City';
 
+export const UserInfoTabelName = 'UserInfo';
+
+const UserInfoSchema = {
+    name: UserInfoTabelName,
+    primaryKey: 'uid',
+    properties: {
+        uid: 'string',
+        account: 'string',
+        phone: 'string',
+        nickName: 'string?',
+        gender: 'int',
+        islunar: 'int?',
+        birthday: 'date?',
+        roleId: 'int',
+        avatar: 'string?',
+        modifyTime: 'date?',
+    }
+};
+
 const HistorySchema = {
     name: HistoryTableName,
     primaryKey: 'id',
@@ -27,17 +46,46 @@ const instance = new Realm({
     schema: [
         HistorySchema,
         CitySchema,
+        UserInfoSchema
     ],
     deleteRealmIfMigrationNeeded: true,
     inMemory: false,
 });
 
 
-/***表使用区**/
-export function writeToRealm(obj, tabName) {
+/**
+ * 新增信息
+ * @param {*} tabName 表名
+ * @param {*} obj 数据
+ */
+export function writeToRealm(tabName, obj) {
+    console.log("writeToRealm",obj);
+    return new Promise((resolve, reject) => {
+        try {
+            instance.write(() => {
+                instance.create(tabName, obj, true)
+                console
+                resolve(true)
+            })
+        } catch (e) {
+            console.log("writeToRealmError");
+            reject(e);
+        }
+
+    })
+}
+
+
+
+/**
+ * 修改信息
+ * @param {*} tabName 表名
+ * @param {*} obj 数据
+ */
+export function updateToRealm(tabName, obj) {
     return new Promise((resolve, reject) => {
         instance.write(() => {
-            instance.create(tabName, obj, true)
+            instance.create(tabName, obj, 'modified')
             resolve(true)
         })
     })
@@ -83,20 +131,20 @@ const _readAllData = () => {
 }
 
 export function realmDBPath() {
-    // console.log(instance.path);
+    console.log(instance.path);
 
-    realmDBPath();
-        
-    clearAllFromRealm(HistoryTableName);
+    // realmDBPath();
 
-    let row1 = { "id": 1, "name": "战狼1" };
-    writeToRealm(row1, HistoryTableName).then(() => {
-        // ToastAndroid.show('写入完成1', ToastAndroid.SHORT);
-    });
-    let row2 = { "id": 2, "name": "战狼2" };
-    writeToRealm(row2, HistoryTableName).then(() => {
-        // ToastAndroid.show('写入完成2', ToastAndroid.SHORT);
-    });
+    // clearAllFromRealm(HistoryTableName);
 
-    _readAllData();
+    // let row1 = { "id": 1, "name": "战狼1" };
+    // writeToRealm(row1, HistoryTableName).then(() => {
+    //     // ToastAndroid.show('写入完成1', ToastAndroid.SHORT);
+    // });
+    // let row2 = { "id": 2, "name": "战狼2" };
+    // writeToRealm(row2, HistoryTableName).then(() => {
+    //     // ToastAndroid.show('写入完成2', ToastAndroid.SHORT);
+    // });
+
+    // _readAllData();
 }

@@ -43,11 +43,11 @@ const DateTimeModelPicker = ({
 
     // 确定按钮，将缓存日期存进确定值
     const okClick = () => {
-        setDate(_date);
 
         const dateFormat = Format(_date, 'YYYY-MM-DD');
         const dateText = islunar ? "农历 " + dateFormat : dateFormat;
         setDateText(dateText);
+        setDate(dateFormat);
 
         setShow(false);
     }

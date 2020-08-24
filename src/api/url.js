@@ -14,6 +14,13 @@ const serviceURL = {
       url: userUrl + 'registry',
       method: 'POST'
    },
+
+    /**完善信息 */
+    improveInformation: {
+      url: userUrl + 'improveInformation',
+      method: 'POST'
+   },
+
    /**验证手机号是否已经被注册 */
    checkPhone: {
       url: baseUrl + 'checkPhone',

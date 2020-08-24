@@ -93,7 +93,7 @@ export default function App() {
   let isLoggedIn = false;
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'improveImformation'}>
+      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
         <RootStack.Screen name="Tabs" component={TabsStackScreen} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />

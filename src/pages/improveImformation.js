@@ -5,7 +5,8 @@
 import React, { useState } from 'react';
 import {
     Text, StyleSheet, ImageBackground, StatusBar, SafeAreaView, View,
-    Button
+    Button,
+    TouchableWithoutFeedback
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -15,44 +16,74 @@ import IconInput from '../components/icon-input';
 import DateTimeModelPicker from '../components/datetime-model-picker';
 import IconInputTimePicker from '../components/icon-input-timePicker';
 import ButtonSign from '../components/button-sign';
+import IconInputEmail from '../components/icon-input-email';
+import IconInputGender from '../components/icon-input-gender';
+
+import serviceYouni from '../api';
+
 
 const placeholderTextColor = "rgba(255,255,255,0.3)";
 const borderColor = "rgba(255,255,255,0.5)";
 const fontColor = "#fff";
 
 
-const ImproveImformationPage = ({navigation}) => {
+const ImproveImformationPage = ({ navigation, route }) => {
 
-    const [account, setAccount] = useState();
+    const [nickName, setNickName] = useState();
     const [birthday, setBirthday] = useState();
     const [islunar, setIslunar] = useState(false);
 
+    const [email, setEmail] = useState();
+    const [isMale, setIsMale] = useState(1);
+
+    console.log(route.params);
 
     const gotoClick = () => {
-        navigation.push('Signup')
+        const params = {
+            uid: route.params,
+            gender: isMale,
+            islunar: islunar,
+            birthday: birthday,
+            nickName: nickName
+        }
+        serviceYouni("improveInformation", params)
+            .then((res) => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            {
+                                name: 'Tabs',
+                                params: res,
+                            },
+                        ],
+                    })
+                );
+            }, (error) => {
+                Alert.alert('完善信息失败，请联系管理员！', [
+                    {
+                        text: '好的'
+
+                    }
+                ]);
+            });
+        // navigation.push('Signup')
     }
 
     return (
         <ImageBackground source={require('../assets/images/Background.png')} style={{ width: '100%', height: '100%' }}>
-            <View style={styles.viewTitle}>
-                <AntDesign name={"left"} size={18} color={"#fff"} />
-                <Text style={styles.textTitle}>完善信息</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => { navigation.pop() }}>
+                <View style={styles.viewTitle}>
+                    <AntDesign name={"left"} size={18} color={"#fff"} />
+                    <Text style={styles.textTitle}>完善信息</Text>
+                </View>
+            </TouchableWithoutFeedback>
 
             <View style={styles.viewContent}>
-                {/* <IconInput
-                    value={account}
-                    ChangeText={setAccount}
-                    placeholder="韭菜账号(用于登录与身份识别)"
-                    iconName="phone-portrait-outline"
-                    borderColor={borderColor}
-                    placeholderTextColor={placeholderTextColor}
-                    fontColor={fontColor}
-                /> */}
-
+                {/* 昵称 */}
                 <IconInput
-                    value={account}
-                    ChangeText={setAccount}
+                    value={nickName}
+                    ChangeText={setNickName}
                     placeholder="昵称"
                     iconName="person-circle"
                     borderColor={borderColor}
@@ -60,8 +91,13 @@ const ImproveImformationPage = ({navigation}) => {
                     fontColor={fontColor}
                 />
 
+                {/* 性别 */}
+                <IconInputGender
+                    isMale={isMale}
+                    setIsMale={setIsMale}
+                />
 
-
+                {/* 生日 */}
                 <IconInputTimePicker
                     value={birthday}
                     ChangeText={setBirthday}
@@ -69,14 +105,15 @@ const ImproveImformationPage = ({navigation}) => {
                     placeholderTextColor={placeholderTextColor}
                     fontColor={fontColor}
                     borderColor={borderColor}
-                    wantLunar = {true}
+                    wantLunar={true}
                     islunar={islunar}
                     setIslunar={setIslunar}
                 />
 
-                <IconInput
-                    value={account}
-                    ChangeText={setAccount}
+                {/* 邮箱 */}
+                <IconInputEmail
+                    value={email}
+                    ChangeText={setEmail}
                     placeholder="邮箱(用于找回账号)"
                     iconName="mail"
                     borderColor={borderColor}

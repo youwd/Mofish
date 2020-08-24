@@ -6,10 +6,11 @@ import {
     View, TextInput,
     TouchableWithoutFeedback
 } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 
 // 数据库模块
 import {
-    HistoryTableName,
+    UserInfoTabelName,
     CityTableName,
     clearAllFromRealm,
     queryAllFromRealm,
@@ -18,7 +19,9 @@ import {
     realmDBPath
 } from "../util/realm";
 
-import { CommonActions } from '@react-navigation/native';
+//加密
+import md5 from 'crypto-js/md5';
+
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from '../components/icon-input';
@@ -34,29 +37,25 @@ const SignUpPage = ({ navigation }) => {
     const [password, setPassword] = useState();
     const [eyeOff, setEyeOff] = useState(true);
 
+    // realmDBPath();
 
     const registryClick = () => {
         const params = {
-            nickName: "12312",
             phone: account,
-            password: password,
-            userName: account
+            password: md5(password),
         }
         serviceYouni("registry", params)
             .then((res) => {
-                navigation.dispatch(
-                    CommonActions.reset({
-                        index: 0,
-                        routes: [
-                            {
-                                name: 'Tabs',
-                                params: { user: 'jane' },
-                            },
-                        ],
-                    })
-                );
+                writeToRealm(UserInfoTabelName,res );
+                navigation.push('improveImformation', res.uid);
+
             }, (error) => {
-                console.log("刷新失败");
+                Alert.alert('注册失败，请联系管理员！', [
+                    {
+                        text: '好的'
+
+                    }
+                ]);
             });
 
     }

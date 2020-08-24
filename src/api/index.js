@@ -25,6 +25,7 @@ const serviceYouni = (type, data = {}, headers = {}, id = 'no') => {
     // 判断请求是否是"POST", "PATCH", "PUT",是则用data，否则用params
     const config = ["POST", "PATCH", "PUT"].includes(_service.method) ?
         { ...baseConfig, data: data } : { ...baseConfig, params: data };
+        // console.log(config)
 
 
     return new Promise((resolve, reject) => {
