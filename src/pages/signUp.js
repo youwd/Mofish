@@ -4,7 +4,8 @@ import {
     StyleSheet, ImageBackground,
     StatusBar, ScrollView,
     View, TextInput,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Alert
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 
@@ -46,7 +47,7 @@ const SignUpPage = ({ navigation }) => {
         }
         serviceYouni("registry", params)
             .then((res) => {
-                writeToRealm(UserInfoTabelName,res );
+                writeToRealm(UserInfoTabelName, res);
                 navigation.push('improveImformation', res.uid);
 
             }, (error) => {
@@ -60,6 +61,16 @@ const SignUpPage = ({ navigation }) => {
 
     }
 
+    const checkoutPwd = () => {
+        if (password && password.length < 6) {
+            Alert.alert('密码不少于6位', [
+                {
+                    text: '好的', onPress: () => console.log("checkout pwd ok")
+
+                }
+            ]);
+        }
+    }
     return (
         <>
             <StatusBar barStyle="light-content" translucent={true} />
@@ -98,6 +109,7 @@ const SignUpPage = ({ navigation }) => {
                                     placeholder="请输入密码"
                                     eyeOff={eyeOff}
                                     setEyeOff={setEyeOff}
+                                    checkoutPwd={checkoutPwd}
                                 />
 
                                 <View style={styles.checkView}>
