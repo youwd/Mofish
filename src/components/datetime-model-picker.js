@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Text, StyleSheet, View, Modal, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import { Format } from '../util/time';
+import { Format } from 'utils/time';
 
 /**
  * 日期时间选择组件

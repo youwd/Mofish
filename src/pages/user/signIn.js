@@ -4,16 +4,23 @@ import {
     StyleSheet, ImageBackground,
     StatusBar, ScrollView,
     View, TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 import { CommonActions } from '@react-navigation/native';
 
-import IconInput from '../components/icon-input';
-import ButtonSign from '../components/button-sign';
-import IconQuickLogin from '../components/icon-quicklogin';
-import IconInputPassword from '../components/icon-input-password';
-import serviceYouni from '../api'
+import IconInput from 'components/icon-input';
+import ButtonSign from 'components/button-sign';
+import IconQuickLogin from 'components/icon-quicklogin';
+import IconInputPassword from 'components/icon-input-password';
+import serviceYouni from 'api'
+
+// 数据库模块
+import {
+    UserInfoTabelName,
+    writeToRealm,
+} from "utils/realm";
 
 const SignInPage = ({ navigation }) => {
     const [account, setAccount] = useState();
@@ -27,19 +34,25 @@ const SignInPage = ({ navigation }) => {
         }
         serviceYouni("login", params)
             .then((res) => {
+                console.log(res.data);
+                writeToRealm(UserInfoTabelName, { ...res.data, loginTime: new Date() });
                 navigation.dispatch(
                     CommonActions.reset({
-                      index: 0,
-                      routes: [
-                        {
-                          name: 'Tabs',
-                          params: { user: 'jane' },
-                        },
-                      ],
+                        index: 0,
+                        routes: [
+                            {
+                                name: 'Tabs',
+                                params: { user: 'jane' },
+                            },
+                        ],
                     })
-                  );
+                );
             }, (error) => {
-                console.log("刷新失败");
+                Alert.alert('登录失败！', error, [
+                    {
+                        text: '好的'
+                    }
+                ]);
             });
     }
 
@@ -48,7 +61,7 @@ const SignInPage = ({ navigation }) => {
             <StatusBar barStyle="light-content" translucent={true} />
             <SafeAreaView style={styles.signinViewUp}></SafeAreaView>
             <SafeAreaView>
-                <ImageBackground source={require('../assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
+                <ImageBackground source={require('assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
                     <ScrollView scrollEnabled={false}>
                         <View style={styles.inputView}>
                             {/* 标题 */}

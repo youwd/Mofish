@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, Alert } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const IconInputPassword = (
@@ -9,6 +9,7 @@ const IconInputPassword = (
         iconColor = "#3a2baf",
         eyeOff,
         setEyeOff,
+        checkoutPwd
     }
 ) => {
 
@@ -25,17 +26,6 @@ const IconInputPassword = (
         }
         else {
             setEyeIcon(<Ionicons name={"ios-eye"} size={iconSize} color={iconColor} />);
-        }
-    }
-
-    const checkoutPwd = () => {
-        if (value && value.length < 6) {
-            Alert.alert('密码不少于6位', [
-                {
-                    text: '好的', onPress: () => inputEl.current.clear()
-
-                }
-            ]);
         }
     }
 

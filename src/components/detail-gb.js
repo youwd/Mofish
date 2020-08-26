@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, StyleSheet, Image, Linking } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-import serviceYouni from '../api';
-import serviceURL from '../api/url'
-import { FromNow } from '../util/time'
+import serviceYouni from 'api';
+import serviceURL from 'api/url'
+import { FromNow } from 'utils/time'
 
 const DetailScreen = ({ route }) => {
     const [content, getContent] = useState();

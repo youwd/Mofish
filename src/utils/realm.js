@@ -1,11 +1,7 @@
 import Realm from 'realm';
 
-/***表定义区**/
-export const HistoryTableName = 'History';
-export const CityTableName = 'City';
-
+/**登录用户信息表 */
 export const UserInfoTabelName = 'UserInfo';
-
 const UserInfoSchema = {
     name: UserInfoTabelName,
     primaryKey: 'uid',
@@ -20,33 +16,63 @@ const UserInfoSchema = {
         roleId: 'int',
         avatar: 'string?',
         modifyTime: 'date?',
+        loginTime: 'date?',
     }
 };
 
-const HistorySchema = {
-    name: HistoryTableName,
-    primaryKey: 'id',
+/**好友信息表 */
+export const FriendsInfoTabelName = 'Friends';
+const FriendsInfoSchema = {
+    name: FriendsInfoTabelName,
+    primaryKey: 'fid',
     properties: {
-        id: 'int',
-        name: 'string',
+        fid: 'string',
+        account: 'string',
+        phone: 'string',
+        nickName: 'string?',
+        remarkName: 'string?',
+        gender: 'int',
+        islunar: 'int?',
+        birthday: 'date?',
+        roleId: 'int',
+        avatar: 'string?',
+        modifyTime: 'date?',
+        loginTime: 'date?',
     }
 };
 
-
-const CitySchema = {
-    name: CityTableName,
-    primaryKey: 'city_id',
+/**消息记录表 */
+export const MessageTableName = 'Message';
+const MessageSchema = {
+    name: MessageTableName,
+    primaryKey: 'mid',
     properties: {
-        city_id: 'int',
-        city_name: 'string',
+        mid: 'string',
+        uid:'string',
+        rid:'string',
+        messageType:'int',
+        message:'string',
+        modifyTime: 'date',
+    }
+};
+
+/**房间基本信息表 */
+export const RoomTableName = 'Room';
+const RoomSchema = {
+    name: RoomTableName,
+    primaryKey: 'rid',
+    properties: {
+        rid: 'string',
+        persons: 'string',
     }
 };
 
 const instance = new Realm({
     schema: [
-        HistorySchema,
-        CitySchema,
-        UserInfoSchema
+        UserInfoSchema,
+        FriendsInfoSchema,
+        MessageSchema,
+        RoomSchema,
     ],
     deleteRealmIfMigrationNeeded: true,
     inMemory: false,
@@ -64,7 +90,6 @@ export function writeToRealm(tabName, obj) {
         try {
             instance.write(() => {
                 instance.create(tabName, obj, true)
-                console
                 resolve(true)
             })
         } catch (e) {
