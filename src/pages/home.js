@@ -10,8 +10,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import serviceYouni from '../api'
-import { FromNow } from '../util/time'
+import serviceYouni from 'api'
+import { FromNow } from 'utils/time'
 
 
 

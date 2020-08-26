@@ -11,15 +11,15 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 /**带图标的输入框 */
-import IconInput from '../components/icon-input';
+import IconInput from 'components/icon-input';
 /**日期选择组件 */
-import DateTimeModelPicker from '../components/datetime-model-picker';
-import IconInputTimePicker from '../components/icon-input-timePicker';
-import ButtonSign from '../components/button-sign';
-import IconInputEmail from '../components/icon-input-email';
-import IconInputGender from '../components/icon-input-gender';
+import DateTimeModelPicker from 'components/datetime-model-picker';
+import IconInputTimePicker from 'components/icon-input-timePicker';
+import ButtonSign from 'components/button-sign';
+import IconInputEmail from 'components/icon-input-email';
+import IconInputGender from 'components/icon-input-gender';
 
-import serviceYouni from '../api';
+import serviceYouni from 'api';
 
 
 const placeholderTextColor = "rgba(255,255,255,0.3)";
@@ -71,7 +71,7 @@ const ImproveImformationPage = ({ navigation, route }) => {
     }
 
     return (
-        <ImageBackground source={require('../assets/images/Background.png')} style={{ width: '100%', height: '100%' }}>
+        <ImageBackground source={require('assets/images/Background.png')} style={{ width: '100%', height: '100%' }}>
             <TouchableWithoutFeedback onPress={() => { navigation.pop() }}>
                 <View style={styles.viewTitle}>
                     <AntDesign name={"left"} size={18} color={"#fff"} />

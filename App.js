@@ -8,16 +8,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-import HomeScreen from './src/pages/home';
-import ChatScreen from './src/pages/chat';
-import MyScreen from './src/pages/my';
-import DetailGBScreen from './src/components/detail-gb';
+import HomeScreen from 'pages/home';
+import ChatScreen from 'pages/chat';
+import MyScreen from 'pages/my';
+import DetailGBScreen from 'components/detail-gb';
 /**登录页面 */
-import SignInPage from './src/pages/signIn';
+import SignInPage from 'pages/user/signIn';
 /**注册页面 */
-import SignUpPage from './src/pages/signUp';
+import SignUpPage from 'pages/user/signUp';
 /**完善个人资料 */
-import ImproveImformationPage from './src/pages/improveImformation';
+import ImproveImformationPage from 'pages/user/improveImformation';
 
 
 /**修改tabs的标题 */

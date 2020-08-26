@@ -12,49 +12,41 @@ import { CommonActions } from '@react-navigation/native';
 // 数据库模块
 import {
     UserInfoTabelName,
-    CityTableName,
-    clearAllFromRealm,
-    queryAllFromRealm,
     writeToRealm,
-    clearRowFromRealm,
     realmDBPath
-} from "../util/realm";
+} from "utils/realm";
 
 //加密
-import md5 from 'crypto-js/md5';
-
+import MD5 from 'crypto-js/md5';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import IconInput from '../components/icon-input';
-import ButtonSign from '../components/button-sign';
-import IconQuickLogin from '../components/icon-quicklogin';
-import IconInputPassword from '../components/icon-input-password';
+import IconInput from 'components/icon-input';
+import ButtonSign from 'components/button-sign';
+import IconQuickLogin from 'components/icon-quicklogin';
+import IconInputPassword from 'components/icon-input-password';
 
-import serviceYouni from '../api'
-
+import serviceYouni from 'api'
 
 const SignUpPage = ({ navigation }) => {
     const [account, setAccount] = useState();
     const [password, setPassword] = useState();
     const [eyeOff, setEyeOff] = useState(true);
 
-    // realmDBPath();
+    realmDBPath();
 
     const registryClick = () => {
         const params = {
             phone: account,
-            password: md5(password),
+            password: MD5(password).toString(),
         }
         serviceYouni("registry", params)
             .then((res) => {
-                writeToRealm(UserInfoTabelName, res);
-                navigation.push('improveImformation', res.uid);
-
+                writeToRealm(UserInfoTabelName, res.data);
+                navigation.push('improveImformation', res.data.uid);
             }, (error) => {
                 Alert.alert('注册失败，请联系管理员！', [
                     {
                         text: '好的'
-
                     }
                 ]);
             });
@@ -76,7 +68,7 @@ const SignUpPage = ({ navigation }) => {
             <StatusBar barStyle="light-content" translucent={true} />
             <SafeAreaView style={styles.signinViewUp}></SafeAreaView>
             <SafeAreaView>
-                <ImageBackground source={require('../assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
+                <ImageBackground source={require('assets/images/user/siginBackground.png')} style={{ width: '100%', height: '100%' }}>
                     <ScrollView scrollEnabled={false}>
                         <View style={styles.inputView}>
                             {/* 标题 */}
