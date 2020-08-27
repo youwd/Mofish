@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         marginTop: StatusBar.currentHeight || 0,
-        // backgroundColor: "#fff"
+        backgroundColor: "#fff"
     },
     item: {
         backgroundColor: '#fff',

@@ -25,18 +25,20 @@ const serviceYouni = (type, data = {}, headers = {}, id = 'no') => {
     // 判断请求是否是"POST", "PATCH", "PUT",是则用data，否则用params
     const config = ["POST", "PATCH", "PUT"].includes(_service.method) ?
         { ...baseConfig, data: data } : { ...baseConfig, params: data };
-        // console.log(config)
+    // console.log(config)
 
 
     return new Promise((resolve, reject) => {
         axios(config).then((res) => {
-            // console.log(config,res.data)
+            // console.log(res)
             if (res.data.code.toString() === '200') {
                 resolve(res.data.data);
             } else {
                 reject(res.data.des);
             }
-        })
+        }).catch(error => {
+            reject(error.toString());
+        });
     });
 
 }

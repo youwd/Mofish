@@ -39,9 +39,9 @@ function getHeaderTitle(route) {
 
 const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
-  useEffect(() => {
-    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-  }, [navigation, route]);
+  // useEffect(() => {
+  //   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  // }, [navigation, route]);
 
   return (
     <TabStack.Navigator
@@ -63,12 +63,17 @@ function TabsStackScreen({ navigation, route }) {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#ca2c20',
+        activeTintColor: '#559EDF',
         inactiveTintColor: 'gray',
+        style:{
+          backgroundColor:"#fff",
+          // borderRadius:30
+        }
       }}
+     
     >
       <TabStack.Screen name="Home" component={HomeScreen} options={{ title: '资讯' }} />
-      <TabStack.Screen name="Chat" component={ChatScreen} options={{ title: '交流' }} />
+      <TabStack.Screen name="Chat" component={ChatScreen} options={{ title: '消息' }} />
       <TabStack.Screen name="My" component={MyScreen} options={{ title: '我' }} />
     </TabStack.Navigator>
   );
@@ -94,7 +99,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
-        <RootStack.Screen name="Tabs" component={TabsStackScreen} />
+        <RootStack.Screen name="Tabs" component={TabsStackScreen} options={{ headerShown: false }}/>
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
         <RootStack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
