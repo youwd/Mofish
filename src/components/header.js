@@ -11,13 +11,13 @@ const Header = (
         iconSize = 25,
         titleText = "header",
         titleColor,
-        titleFontSize = 15
-
+        titleFontSize = 15,
+        leftClick
     }
 ) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={leftClick}>
                 <Ionicons name={iconLeftName} size={iconSize} color={iconColor} />
             </TouchableOpacity>
 

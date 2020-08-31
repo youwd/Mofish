@@ -6,6 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "ios8": "react-native run-ios --simulator 'iPhone 8'",
+    "ios8p": "react-native run-ios --simulator 'iPhone 8 Plus'",
+    "iose": "react-native run-ios --simulator 'iPhone SE'",
     "start": "react-native start",
     "pod": " cd ios && pod install && cd ..",
     "test": "jest",
