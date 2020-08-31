@@ -3,11 +3,15 @@ import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /**登录注册按钮 */
-const ButtonSign = ({ label, click }) => {
+const ButtonSign = ({ 
+    label, click,
+    textColor = "#fff",
+    backgroundColor="#6352c4"
+ }) => {
     return (
         <View style={styles.buttonStyle}>
             <TouchableOpacity activeOpacity={0.5} onPress={click}>
-                <View style={styles.buttonTouchable}>
+                <View style={[styles.buttonTouchable,{backgroundColor:backgroundColor}]}>
                     {/* <View style={styles.buttonStyle1}>
                         <Text style={styles.buttonText}>{label}</Text>
                     </View>
@@ -16,7 +20,7 @@ const ButtonSign = ({ label, click }) => {
                     <View style={styles.buttonStyle3}>
                         <Ionicons name="arrow-forward" size={24} color="#483eb1" />
                     </View> */}
-                    <Text style={styles.buttonText}>{label}</Text>
+                    <Text style={[styles.buttonText,{color: textColor,}]}>{label}</Text>
                 </View>
             </TouchableOpacity>
 
@@ -38,7 +42,6 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems: "center",
         // backgroundColor: "#ebe8f8",
-        backgroundColor: "#6352c4",
         borderRadius: 35,
         height: "100%",
         shadowColor: "#000",
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 30,
     },
     buttonText: {
-        color: "#fff",
+        
         fontSize: 16
     },
     // 直角三角形

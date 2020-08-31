@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 import HomeScreen from 'pages/home';
-import ChatScreen from 'pages/chat';
+import ChatScreen from 'pages/chat/chat';
 import MyScreen from 'pages/my';
 import DetailGBScreen from 'components/detail-gb';
 /**登录页面 */
@@ -18,6 +18,10 @@ import SignInPage from 'pages/user/signIn';
 import SignUpPage from 'pages/user/signUp';
 /**完善个人资料 */
 import ImproveImformationPage from 'pages/user/improveImformation';
+import ChatDetailPage from 'pages/chat/chat-detail';
+import FriendListPage from 'pages/friends/firend-list';
+import FriendDetailPage from 'pages/friends/friend-detail';
+import FriendAddPage from 'pages/friends/friend-add';
 
 
 /**修改tabs的标题 */
@@ -39,9 +43,9 @@ function getHeaderTitle(route) {
 
 const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
-  useEffect(() => {
-    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-  }, [navigation, route]);
+  // useEffect(() => {
+  //   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  // }, [navigation, route]);
 
   return (
     <TabStack.Navigator
@@ -63,12 +67,17 @@ function TabsStackScreen({ navigation, route }) {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#ca2c20',
+        activeTintColor: '#559EDF',
         inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: "#fff",
+          // borderRadius:30
+        }
       }}
+
     >
       <TabStack.Screen name="Home" component={HomeScreen} options={{ title: '资讯' }} />
-      <TabStack.Screen name="Chat" component={ChatScreen} options={{ title: '交流' }} />
+      <TabStack.Screen name="Chat" component={ChatScreen} options={{ title: '消息' }} />
       <TabStack.Screen name="My" component={MyScreen} options={{ title: '我' }} />
     </TabStack.Navigator>
   );
@@ -94,11 +103,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
-        <RootStack.Screen name="Tabs" component={TabsStackScreen} />
+        <RootStack.Screen name="Tabs" component={TabsStackScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
         <RootStack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
         <RootStack.Screen name="improveImformation" component={ImproveImformationPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="chatDetail" component={ChatDetailPage} options={{ headerShown: false }} />
+
+        <RootStack.Screen name="friendDetail" component={FriendDetailPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="friendList" component={FriendListPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="friendAdd" component={FriendAddPage} options={{ headerShown: false }} />
+
       </RootStack.Navigator>
     </NavigationContainer>
 
