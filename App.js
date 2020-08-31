@@ -19,6 +19,9 @@ import SignUpPage from 'pages/user/signUp';
 /**完善个人资料 */
 import ImproveImformationPage from 'pages/user/improveImformation';
 import ChatDetailPage from 'pages/chat/chat-detail';
+import FriendListPage from 'pages/friends/firend-list';
+import FriendDetailPage from 'pages/friends/friend-detail';
+import FriendAddPage from 'pages/friends/friend-add';
 
 
 /**修改tabs的标题 */
@@ -106,6 +109,10 @@ export default function App() {
         <RootStack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
         <RootStack.Screen name="improveImformation" component={ImproveImformationPage} options={{ headerShown: false }} />
         <RootStack.Screen name="chatDetail" component={ChatDetailPage} options={{ headerShown: false }} />
+
+        <RootStack.Screen name="friendDetail" component={FriendDetailPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="friendList" component={FriendListPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="friendAdd" component={FriendAddPage} options={{ headerShown: false }} />
 
       </RootStack.Navigator>
     </NavigationContainer>

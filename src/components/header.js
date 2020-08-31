@@ -9,10 +9,11 @@ const Header = (
         iconRightName = "",
         iconColor = "#000",
         iconSize = 25,
-        titleText = "header",
+        titleText = "",
         titleColor,
         titleFontSize = 15,
-        leftClick
+        leftClick,
+        rightClick
     }
 ) => {
     return (
@@ -26,8 +27,9 @@ const Header = (
                 color: titleColor
             }}>{titleText}</Text>
 
-            <TouchableOpacity>
-                <Ionicons name={iconRightName} size={iconSize} color={iconColor} />
+            <TouchableOpacity onPress={rightClick}>
+                {iconRightName ?
+                    (<Ionicons name={iconRightName} size={iconSize} color={iconColor} />) : null}
             </TouchableOpacity>
 
         </View>

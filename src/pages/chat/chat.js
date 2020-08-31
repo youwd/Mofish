@@ -11,6 +11,11 @@ import Search from 'components/search';
 
 
 const ChatScreen = ({ navigation }) => {
+
+    const leftClick = () => {
+        navigation.navigate('friendList', 111)
+    }
+
     return (
         <View style={styles.container}>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#559EDF', '#69B9E3']} >
@@ -18,6 +23,7 @@ const ChatScreen = ({ navigation }) => {
                     iconLeftName="people-outline"
                     iconRightName="add"
                     titleText="消息"
+                    leftClick = {leftClick}
                 />
             </LinearGradient>
 
@@ -93,10 +99,7 @@ const ChatScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        height: "100%"
-    },
-    viewStyle: {
-        height: "10%",
+        height: "100%",
         backgroundColor: "#fff"
     },
     searchStyle: {
