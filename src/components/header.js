@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import Search from './search';
@@ -17,22 +17,25 @@ const Header = (
     }
 ) => {
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={leftClick}>
-                <Ionicons name={iconLeftName} size={iconSize} color={iconColor} />
-            </TouchableOpacity>
+        <>
+            <SafeAreaView></SafeAreaView>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={leftClick}>
+                    <Ionicons name={iconLeftName} size={iconSize} color={iconColor} />
+                </TouchableOpacity>
 
-            <Text style={{
-                fontSize: titleFontSize,
-                color: titleColor
-            }}>{titleText}</Text>
+                <Text style={{
+                    fontSize: titleFontSize,
+                    color: titleColor
+                }}>{titleText}</Text>
 
-            <TouchableOpacity onPress={rightClick}>
-                {iconRightName ?
-                    (<Ionicons name={iconRightName} size={iconSize} color={iconColor} />) : null}
-            </TouchableOpacity>
+                <TouchableOpacity onPress={rightClick}>
+                    {iconRightName ?
+                        (<Ionicons name={iconRightName} size={iconSize} color={iconColor} />) : null}
+                </TouchableOpacity>
 
-        </View>
+            </View>
+        </>
     )
 }
 
@@ -42,8 +45,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 10,
-        paddingTop: 25,
-        paddingBottom: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
         // borderColor:"#000",
         // borderWidth:1,
         // borderRadius:10
@@ -51,6 +54,10 @@ const styles = StyleSheet.create({
     linearGradient: {
         padding: 5,
         borderRadius: 10
+    },
+    viewUp: {
+        // backgroundColor: "#6554c5",
+        // flex: 1
     },
 })
 
