@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -7,21 +7,14 @@ import ChatScreen from 'pages/chat/chat';
 import MyScreen from 'pages/my';
 
 import io from 'socket.io-client';
-const socket = io("http://127.0.0.1:7001", {
+import { queryLastLoginInfo } from 'utils/realm'
+const log = console.log;
 
-    // // 实际使用中可以在这里传递参数
-    query: {
-        room: 'demo',
-        // userId: `client_${Math.random()}`,
-        userInfo: JSON.stringify({}),
-        userId: "_state.uid11111111"
-    },
-    transports: ['websocket']
-});
 
 const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
 
+    const [uid, setUid] = useState();
     const onConnectionStateUpdate = (_socket) => {
         // console.log('#connect,', _socket.id, _socket);
         // 记录该id的对话
@@ -35,10 +28,38 @@ function TabsStackScreen({ navigation, route }) {
     }
 
     useEffect(() => {
+        // 初始化
+        const userInfo = queryLastLoginInfo();
+        setUid(userInfo.uid);
+    }, []);
+
+    useEffect(() => {
+        log("uid:", uid);
+
+        if (!uid) return;
+        
+        const socket = io("http://127.0.0.1:7001", {
+            // 实际使用中可以在这里传递参数
+            query: {
+                room: 'demo',
+                userInfo: JSON.stringify({}),
+                userId: uid
+            },
+            transports: ['websocket']
+        });
         socket.on('connect', () => onConnectionStateUpdate(socket));
         socket.on('disconnect', () => console.log('disconnect!!!'));
         socket.on('message', (content) => console.log(content));
-    }, []);
+        socket.on('error', (e) =>  log('#error', e));
+
+        return () => {
+            socket.off('connect');
+            socket.off('message');
+            socket.off('disconnect');
+            socket.off('error');
+            log("off---------");
+        };
+    }, [uid]);
 
     return (
         <TabStack.Navigator

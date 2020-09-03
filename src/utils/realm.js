@@ -126,6 +126,21 @@ export function queryLastLoginInfo() {
     return obj["0"];
 }
 
+/**
+ * 清空所有账户登录时间
+ */
+export function clearLoginTime() {
+    return new Promise((resolve, reject) => {
+        instance.write(() => {
+            const obj = instance.objects(UserInfoTabelName).filtered('loginTime != null');
+            for (let p of obj) {
+                p.loginTime = null;
+            }
+            resolve(true)
+        })
+
+    })
+}
 
 /**
  * 查找tabName所有数据
