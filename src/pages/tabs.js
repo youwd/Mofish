@@ -8,6 +8,9 @@ import MyScreen from 'pages/my';
 
 import io from 'socket.io-client';
 import { queryLastLoginInfo } from 'utils/realm'
+import store from 'store/index'
+import { socketChange, userInfoChange } from 'store/actionCreatores'
+
 const log = console.log;
 
 
@@ -30,36 +33,42 @@ function TabsStackScreen({ navigation, route }) {
     useEffect(() => {
         // 初始化
         const userInfo = queryLastLoginInfo();
-        setUid(userInfo.uid);
-    }, []);
+        const _uid = userInfo.uid;
+        if (!_uid) return;
+        setUid(_uid);
 
-    useEffect(() => {
-        log("uid:", uid);
+        // store 中更新全局用户信息
+        userInfoChange(userInfo);
 
-        if (!uid) return;
-        
         const socket = io("http://127.0.0.1:7001", {
             // 实际使用中可以在这里传递参数
             query: {
                 room: 'demo',
                 userInfo: JSON.stringify({}),
-                userId: uid
+                userId: _uid
             },
             transports: ['websocket']
         });
         socket.on('connect', () => onConnectionStateUpdate(socket));
         socket.on('disconnect', () => console.log('disconnect!!!'));
         socket.on('message', (content) => console.log(content));
-        socket.on('error', (e) =>  log('#error', e));
+        socket.on('error', (e) => log('#error', e));
+        
+        // store 中更新全局socket信息
+        socketChange(socket);
 
         return () => {
+            // 主动断开连接
+            socket.disconnect();
+            // 取消所有监听
             socket.off('connect');
             socket.off('message');
             socket.off('disconnect');
             socket.off('error');
+            socket.off(socket.id);
             log("off---------");
         };
-    }, [uid]);
+    }, []);
 
     return (
         <TabStack.Navigator

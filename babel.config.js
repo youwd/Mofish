@@ -11,7 +11,8 @@ module.exports = {
           pages:'./src/pages',
           components: './src/components',
           utils: './src/utils',
-          api: './src/api'
+          api: './src/api',
+          store:'./src/store'
         },
       },
     ]

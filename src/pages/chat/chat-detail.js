@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text, StyleSheet, View, TextInput,
     KeyboardAvoidingView, Platform, Image,
@@ -8,10 +8,31 @@ import LinearGradient from 'react-native-linear-gradient';
 import Header from 'components/header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import store from 'store/index';
+
 const ChatDetailPage = ({ navigation }) => {
+    const [socket, setSocket] = useState();
+    const [msg, setMsg] = useState();
 
     const leftClick = () => {
         navigation.pop();
+    }
+
+    useEffect(() => {
+        setSocket(store.getState().socket);
+        // const unsubscribe = store.subscribe(aaa1) //订阅Redux的状态
+        // return () => {
+        //     unsubscribe();
+        // }
+    }, []);
+
+    const sendMessage = ()=>{
+        socket.emit('exchange', {
+            target: msg,
+            payload: {
+              msg: msg,
+            },
+          });
     }
 
     return (
@@ -25,7 +46,7 @@ const ChatDetailPage = ({ navigation }) => {
                     leftClick={leftClick}
                 />
             </LinearGradient>
-          
+
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.chatViewStyle}>
 
@@ -61,7 +82,7 @@ const ChatDetailPage = ({ navigation }) => {
 
                 </View>
             </TouchableWithoutFeedback>
-           
+
             <KeyboardAvoidingView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.chatBottomStyle}
@@ -73,11 +94,12 @@ const ChatDetailPage = ({ navigation }) => {
 
                         <TextInput
                             style={[styles.inputStyle]}
-                            // onChangeText={text => ChangeText(text)}
-                            // value={value}
+                            onChangeText={text => setMsg(text)}
+                            value={msg}
                             placeholder={"请输入.."}
                             keyboardType={"default"}
                             returnKeyType={"send"}
+                            onSubmitEditing={sendMessage}
                             underlineColorAndroid="transparent"
                             enablesReturnKeyAutomatically={true}
                         />
@@ -87,7 +109,7 @@ const ChatDetailPage = ({ navigation }) => {
                     </LinearGradient>
                 </View>
             </KeyboardAvoidingView>
-      
+
         </View>
 
     )

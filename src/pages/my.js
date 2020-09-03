@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Button } from 'react-native';
+import { Text, Button, SafeAreaView } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { clearLoginTime } from 'utils/realm'
 
@@ -20,8 +20,11 @@ const MyScreen = ({ navigation }) => {
     }
     return (
         // <Text>MyScreen</Text>
+        <>
+            <SafeAreaView></SafeAreaView>
 
-        <Button title="2371236123156" onPress={logout}></Button>
+            <Button title="2371236123156" onPress={logout}></Button>
+        </>
     )
 }
 

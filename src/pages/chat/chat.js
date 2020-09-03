@@ -23,7 +23,7 @@ const ChatScreen = ({ navigation }) => {
                     iconLeftName="people-outline"
                     iconRightName="add"
                     titleText="消息"
-                    leftClick = {leftClick}
+                    leftClick={leftClick}
                 />
             </LinearGradient>
 
