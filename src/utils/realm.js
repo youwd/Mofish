@@ -48,10 +48,10 @@ const MessageSchema = {
     primaryKey: 'mid',
     properties: {
         mid: 'string',
-        uid:'string',
-        rid:'string',
-        messageType:'int',
-        message:'string',
+        uid: 'string',
+        rid: 'string',
+        messageType: 'int',
+        message: 'string',
         modifyTime: 'date',
     }
 };
@@ -64,6 +64,7 @@ const RoomSchema = {
     properties: {
         rid: 'string',
         persons: 'string',
+        messages: { type: 'list', objectType: MessageTableName },
     }
 };
 
@@ -71,8 +72,8 @@ const instance = new Realm({
     schema: [
         UserInfoSchema,
         FriendsInfoSchema,
-        MessageSchema,
         RoomSchema,
+        MessageSchema
     ],
     deleteRealmIfMigrationNeeded: true,
     inMemory: false,
@@ -85,7 +86,7 @@ const instance = new Realm({
  * @param {*} obj 数据
  */
 export function writeToRealm(tabName, obj) {
-    console.log("writeToRealm",obj);
+    console.log("writeToRealm", obj);
     return new Promise((resolve, reject) => {
         try {
             instance.write(() => {
@@ -117,6 +118,19 @@ export function updateToRealm(tabName, obj) {
 }
 
 
+/**
+ * 查找最近登录的账户
+ */
+export function queryLastLoginInfo() {
+    const obj = instance.objects(UserInfoTabelName).filtered('loginTime != null SORT(loginTime DESC) LIMIT(1)');
+    return obj["0"];
+}
+
+
+/**
+ * 查找tabName所有数据
+ * @param {*} tabName 
+ */
 export function queryAllFromRealm(tabName) {
     return new Promise((resolve, reject) => {
         let obj = instance.objects(tabName);
@@ -134,6 +148,7 @@ export function clearAllFromRealm(tabName) {
         })
     })
 }
+
 
 
 export function clearRowFromRealm(id, tabName) {

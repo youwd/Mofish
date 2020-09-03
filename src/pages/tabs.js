@@ -6,11 +6,38 @@ import HomeScreen from 'pages/home';
 import ChatScreen from 'pages/chat/chat';
 import MyScreen from 'pages/my';
 
-const TabStack = createBottomTabNavigator();
+import io from 'socket.io-client';
+const socket = io("http://127.0.0.1:7001", {
 
+    // // 实际使用中可以在这里传递参数
+    query: {
+        room: 'demo',
+        // userId: `client_${Math.random()}`,
+        userInfo: JSON.stringify({}),
+        userId: "_state.uid11111111"
+    },
+    transports: ['websocket']
+});
+
+const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
+
+    const onConnectionStateUpdate = (_socket) => {
+        // console.log('#connect,', _socket.id, _socket);
+        // 记录该id的对话
+        const msgs = [];
+
+        // 监听自身 id 以实现 p2p 通讯
+        _socket.on(_socket.id, msg => {
+            console.log('#receive,', msg);
+            msgs.push(msg.data.payload.msg);
+        });
+    }
+
     useEffect(() => {
-        
+        socket.on('connect', () => onConnectionStateUpdate(socket));
+        socket.on('disconnect', () => console.log('disconnect!!!'));
+        socket.on('message', (content) => console.log(content));
     }, []);
 
     return (

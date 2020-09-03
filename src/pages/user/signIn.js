@@ -34,7 +34,6 @@ const SignInPage = ({ navigation }) => {
         }
         serviceYouni("login", params)
             .then((res) => {
-                console.log(res.data);
                 writeToRealm(UserInfoTabelName, { ...res.data, loginTime: new Date() });
                 navigation.dispatch(
                     CommonActions.reset({

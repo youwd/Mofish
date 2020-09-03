@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, Button, SafeAreaView } from 'react-native';
 import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +16,7 @@ import ChatDetailPage from 'pages/chat/chat-detail';
 import FriendListPage from 'pages/friends/firend-list';
 import FriendDetailPage from 'pages/friends/friend-detail';
 import FriendAddPage from 'pages/friends/friend-add';
+import { queryLastLoginInfo, updateToRealm, UserInfoTabelName } from 'utils/realm';
 
 
 /**嵌套组件 */
@@ -33,10 +34,22 @@ const userScreens = {
 
 const RootStack = createStackNavigator();
 export default function App() {
-  let isLoggedIn = false;
+
+  //判断是否已经登录过。
+  const isLogin = () => {
+    const userInfo = queryLastLoginInfo();
+    console.log("AppuserInfo:", userInfo);
+    if (userInfo) {
+      updateToRealm(UserInfoTabelName, { uid: userInfo.uid, loginTime: new Date() })
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={isLoggedIn ? 'Tabs' : 'Signin'}>
+      <RootStack.Navigator initialRouteName={isLogin() ? 'Tabs' : 'Signin'}>
         <RootStack.Screen name="Tabs" component={TabsStackScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
