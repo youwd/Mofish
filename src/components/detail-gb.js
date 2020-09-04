@@ -7,22 +7,30 @@ import serviceURL from 'api/url'
 import { FromNow } from 'utils/time'
 
 const DetailScreen = ({ route }) => {
-    const [content, getContent] = useState();
+    const [content, getContent] = useState("");
     const _params = route.params;
 
     useEffect(() => {
+        let mounted = true;
+
         // 看是否需要用type来判断
         if (_params.content) {
             getContent(_params.content);
         } else {
+
             serviceYouni("gbDetail", {}, { 'channel': 'PC' }, _params.subjectId)
                 .then((res) => {
-                    getContent(res.zlArticle.detail);
+                    if (mounted) {
+                        getContent(res.zlArticle.detail);
+                    }
                 }, (error) => {
                     console.log("失败");
                 });
         }
+        return () => mounted = false;
     }, []);
+
+
 
     let contentView;
     if (_params.content) {
@@ -30,7 +38,18 @@ const DetailScreen = ({ route }) => {
     } else {
         contentView = <WebView
             originWhitelist={['*']}
-            source={{ html: content }}
+            source={{
+                html: `<html>
+                            <head>
+                            <style>
+                                body { font-size: 200%; word-wrap: break-word; overflow-wrap: break-word; }
+                             </style>   
+                            </head>
+                                <body>
+                                    ${content}
+                                </body>
+                        </html>`
+            }}
         />
     }
 
@@ -47,10 +66,10 @@ const DetailScreen = ({ route }) => {
             {/* 作者信息 */}
             <View style={styles.author}>
                 <Image
-                    source={{ 
+                    source={{
                         uri: _params.zlAvatarUrl,
                         cache: 'force-cache'
-                     }}
+                    }}
                     style={styles.avatarImage}
                 />
                 <View style={styles.authorInfo}>
@@ -62,17 +81,20 @@ const DetailScreen = ({ route }) => {
             {/* summary 信息 */}
             {summaryView}
 
-            {/* 内容详情 */}
-            {contentView}
+            <View style={{
+                height: "250%"
+            }}>
+                {/* 内容详情 */}
+                {contentView}
+            </View>
+
         </ScrollView>
     )
 }
 const styles = StyleSheet.create({
     view: {
-        width: '100%',
-        height: '100%',
         backgroundColor: "#fff",
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     title: {
         fontSize: 20,

@@ -52,14 +52,21 @@ function HomeScreen({ navigation }) {
     }
 
     useEffect(() => {
+        let mounted = true;
+
         // 获取股帮信息列表
         serviceYouni("gbList", { pageNum, pageSize })
             .then((res) => {
-                setResList(res.records);
-                setLoaded(false);
+                if (mounted) {
+                    setResList(res.records);
+                    setLoaded(false);
+                }
+
             }, (error) => {
                 console.log("失败");
             });
+
+        return () => mounted = false;
     }, []);
 
     const renderItem = ({ item }) => {
@@ -92,10 +99,10 @@ function HomeScreen({ navigation }) {
                     <View style={styles.itemTop}>
                         <View style={styles.TopLeft}>
                             <Image
-                                source={{ 
+                                source={{
                                     uri: item.zlAvatarUrl,
                                     cache: 'force-cache'
-                                 }}
+                                }}
                                 style={styles.avatarImage}
                             />
                             <Text style={styles.author}>{item.zlName}</Text>
@@ -121,7 +128,7 @@ function HomeScreen({ navigation }) {
             <FlatList
                 data={resList}
                 renderItem={renderItem}
-                keyExtractor={(item,index) => item.id + index}
+                keyExtractor={(item, index) => item.id + index}
                 refreshing={loaded}
                 onRefresh={onRefreshInit}
                 onEndReached={getMoreList}

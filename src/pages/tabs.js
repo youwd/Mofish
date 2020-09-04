@@ -33,8 +33,8 @@ function TabsStackScreen({ navigation, route }) {
     useEffect(() => {
         // 初始化
         const userInfo = queryLastLoginInfo();
+        if (!userInfo) return;
         const _uid = userInfo.uid;
-        if (!_uid) return;
         setUid(_uid);
 
         // store 中更新全局用户信息
