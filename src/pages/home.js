@@ -92,7 +92,10 @@ function HomeScreen({ navigation }) {
                     <View style={styles.itemTop}>
                         <View style={styles.TopLeft}>
                             <Image
-                                source={{ uri: item.zlAvatarUrl }}
+                                source={{ 
+                                    uri: item.zlAvatarUrl,
+                                    cache: 'force-cache'
+                                 }}
                                 style={styles.avatarImage}
                             />
                             <Text style={styles.author}>{item.zlName}</Text>

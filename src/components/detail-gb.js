@@ -47,7 +47,10 @@ const DetailScreen = ({ route }) => {
             {/* 作者信息 */}
             <View style={styles.author}>
                 <Image
-                    source={{ uri: _params.zlAvatarUrl }}
+                    source={{ 
+                        uri: _params.zlAvatarUrl,
+                        cache: 'force-cache'
+                     }}
                     style={styles.avatarImage}
                 />
                 <View style={styles.authorInfo}>

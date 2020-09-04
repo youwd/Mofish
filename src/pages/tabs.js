@@ -26,7 +26,7 @@ function TabsStackScreen({ navigation, route }) {
         // 监听自身 id 以实现 p2p 通讯
         _socket.on(_socket.id, msg => {
             console.log('#receive,', msg);
-            msgs.push(msg.data.payload.msg);
+            // msgs.push(msg.data.payload.msg);
         });
     }
 
