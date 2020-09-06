@@ -3,16 +3,28 @@ import LinearGradient from 'react-native-linear-gradient';
 import {
     Text, StyleSheet, View,
     TouchableOpacity,
+    TouchableHighlight,
     Image, FlatList
 } from 'react-native';
 import Header from 'components/header';
 import Search from 'components/search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import Camera from 'components/camera';
+
 const FriendAddPage = ({ navigation }) => {
 
     const [account, setAccount] = useState();
 
+    const [img, setImg] = useState(null);
+
+    function onPicture({ uri }) {
+        setImg(uri);
+    }
+
+    function onBackToCamera() {
+        setImg(null);
+    }
 
     const leftClick = () => {
         navigation.pop();
@@ -20,13 +32,13 @@ const FriendAddPage = ({ navigation }) => {
 
     const onSubmitEditing = () => {
         console.log(account);
-        navigation.navigate('friendDetail',account);
+        navigation.navigate('friendDetail', account);
     }
     return (
         <View style={styles.container}>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#559EDF', '#69B9E3']} >
                 <Header
-                    iconLeftName="arrow-back"
+                    iconLeftName="chevron-back"
                     titleText="添加朋友"
                     // iconColor="#fff"
                     iconSize={20}
@@ -47,7 +59,7 @@ const FriendAddPage = ({ navigation }) => {
 
             <View style={styles.itemContainerStyle}>
                 {/* <FlatList> */}
-                <TouchableOpacity style={styles.itemStyle}>
+                <TouchableOpacity style={styles.itemStyle} onPress={()=>navigation.navigate('camera', "account")}>
                     <View style={[styles.itemIcon, { backgroundColor: "#FB9B51" }]}>
                         <Ionicons name={"scan-outline"} size={20} color={"#fff"} />
                     </View>
@@ -67,6 +79,7 @@ const FriendAddPage = ({ navigation }) => {
                 </TouchableOpacity>
                 {/* </FlatList> */}
             </View>
+
         </View>
     )
 }

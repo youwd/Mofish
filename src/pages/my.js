@@ -41,7 +41,7 @@ const MyScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <Header
                     iconRightName="settings-outline"
-                    iconColor="#fff"
+                    iconColor="#777"
                     iconSize={20}
                     rightClick={rightClick}
                 />

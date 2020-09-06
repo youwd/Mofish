@@ -39,7 +39,7 @@ const ChatDetailPage = ({ navigation }) => {
         <View style={styles.container}>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#90A7DA', '#A6C2F2']} >
                 <Header
-                    iconLeftName="arrow-back"
+                    iconLeftName="chevron-back"
                     iconRightName="ellipsis-horizontal"
                     titleText="小瓶子"
                     iconColor="#fff"

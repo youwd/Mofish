@@ -19,6 +19,7 @@ import FriendAddPage from 'pages/friends/friend-add';
 import { queryLastLoginInfo, updateToRealm, UserInfoTabelName } from 'utils/realm';
 import FriendNewListPage from 'pages/friends/friend-new-list';
 import FriendVerifyPage from 'pages/friends/friend-verify';
+import Camera from 'components/camera';
 
 
 /**嵌套组件 */
@@ -51,7 +52,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={isLogin() ? 'Tabs' : 'Signin'}>
+      <RootStack.Navigator initialRouteName={isLogin() ? 'Tabs' : 'Tabs'}>
         <RootStack.Screen name="Tabs" component={TabsStackScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="Detail-gb" component={DetailGBScreen} options={{ title: '详情', headerBackTitleVisible: false }} />
         <RootStack.Screen name="Signin" component={SignInPage} options={{ headerShown: false }} />
@@ -64,6 +65,8 @@ export default function App() {
         <RootStack.Screen name="friendAdd" component={FriendAddPage} options={{ headerShown: false }} />
         <RootStack.Screen name="friendNewList" component={FriendNewListPage} options={{ headerShown: false }} />
         <RootStack.Screen name="friendVerify" component={FriendVerifyPage} options={{ headerShown: false }} />
+        
+        <RootStack.Screen name="camera" component={Camera} options={{ headerShown: false }} />
         
       </RootStack.Navigator>
     </NavigationContainer>

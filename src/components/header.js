@@ -21,7 +21,8 @@ const Header = (
             <SafeAreaView></SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity onPress={leftClick}>
-                    <Ionicons name={iconLeftName} size={iconSize} color={iconColor} />
+                {iconLeftName ?
+                        (<Ionicons name={iconLeftName} size={iconSize} color={iconColor} />) : null}
                 </TouchableOpacity>
 
                 <Text style={{
