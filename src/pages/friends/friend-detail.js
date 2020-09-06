@@ -19,7 +19,7 @@ const FriendDetailPage = ({ navigation }) => {
     }
 
     const gotoClick = () => {
-
+        navigation.navigate('friendVerify', "account"); 
     }
 
     return (
@@ -27,7 +27,7 @@ const FriendDetailPage = ({ navigation }) => {
 
             <View style={styles.container}>
                 <Header
-                    iconLeftName="arrow-back"
+                    iconLeftName="chevron-back"
                     iconColor="#fff"
                     iconSize={25}
                     leftClick={leftClick}
@@ -62,7 +62,7 @@ const FriendDetailPage = ({ navigation }) => {
                         </View>
 
                         <ButtonSign
-                            label="添加到好友列表"
+                            label="前往验证"
                             backgroundColor="#EDD53E"
                             textColor="#000"
                             click={gotoClick}

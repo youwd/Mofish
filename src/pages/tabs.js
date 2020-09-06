@@ -19,7 +19,7 @@ function TabsStackScreen({ navigation, route }) {
 
     const [uid, setUid] = useState();
     const onConnectionStateUpdate = (_socket) => {
-        // console.log('#connect,', _socket.id, _socket);
+        console.log('#connect,', _socket.id);
         // 记录该id的对话
         const msgs = [];
 

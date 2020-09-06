@@ -17,6 +17,8 @@ import FriendListPage from 'pages/friends/firend-list';
 import FriendDetailPage from 'pages/friends/friend-detail';
 import FriendAddPage from 'pages/friends/friend-add';
 import { queryLastLoginInfo, updateToRealm, UserInfoTabelName } from 'utils/realm';
+import FriendNewListPage from 'pages/friends/friend-new-list';
+import FriendVerifyPage from 'pages/friends/friend-verify';
 
 
 /**嵌套组件 */
@@ -60,7 +62,9 @@ export default function App() {
         <RootStack.Screen name="friendDetail" component={FriendDetailPage} options={{ headerShown: false }} />
         <RootStack.Screen name="friendList" component={FriendListPage} options={{ headerShown: false }} />
         <RootStack.Screen name="friendAdd" component={FriendAddPage} options={{ headerShown: false }} />
-
+        <RootStack.Screen name="friendNewList" component={FriendNewListPage} options={{ headerShown: false }} />
+        <RootStack.Screen name="friendVerify" component={FriendVerifyPage} options={{ headerShown: false }} />
+        
       </RootStack.Navigator>
     </NavigationContainer>
 

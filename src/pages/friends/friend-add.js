@@ -9,8 +9,6 @@ import Header from 'components/header';
 import Search from 'components/search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
 const FriendAddPage = ({ navigation }) => {
 
     const [account, setAccount] = useState();

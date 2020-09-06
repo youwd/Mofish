@@ -25,7 +25,7 @@ const FriendListPage = ({ navigation }) => {
         <View style={styles.container}>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#559EDF', '#69B9E3']} >
                 <Header
-                    iconLeftName="arrow-back"
+                    iconLeftName="chevron-back"
                     iconRightName="person-add-outline"
                     titleText="好友列表"
                     // iconColor="#fff"
@@ -42,7 +42,7 @@ const FriendListPage = ({ navigation }) => {
 
             <View style={styles.itemContainerStyle}>
                 {/* <FlatList> */}
-                <TouchableOpacity style={styles.itemStyle} onPress={() => navigation.navigate('chatDetail', 111)}>
+                <TouchableOpacity style={styles.itemStyle} onPress={() => navigation.navigate('friendNewList', 111)}>
                     <View style={[styles.itemIcon,{backgroundColor:"#FB9B51"}]}>
                         <Ionicons name={"person-add-outline"} size={20} color={"#fff"} />
                     </View>
