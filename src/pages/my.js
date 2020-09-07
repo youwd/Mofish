@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text, Button, SafeAreaView, StyleSheet,
     View,
@@ -17,6 +17,11 @@ import ButtonSign from 'components/button-sign';
 const MyScreen = ({ navigation }) => {
     const [isMale, setIsMale] = useState(1);
 
+    useEffect(()=>{
+        console.log("myPage");
+    },[]);
+
+
     const logout = async () => {
         await clearLoginTime();
         navigation.dispatch(
@@ -32,7 +37,7 @@ const MyScreen = ({ navigation }) => {
     }
 
     const rightClick = () => {
-    
+
     }
 
     return (

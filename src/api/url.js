@@ -1,9 +1,11 @@
 const baseUrl = 'http://127.0.0.1:7001/jiucai/v1/'
 
-const userUrl = baseUrl + 'user/'
+const userUrl = baseUrl + 'user/';
+const friendUrl = baseUrl + 'friend/';
 
 
 const serviceURL = {
+   //#region user模块
    /**登录 */
    login: {
       url: userUrl + 'login',
@@ -15,8 +17,8 @@ const serviceURL = {
       method: 'POST'
    },
 
-    /**完善信息 */
-    improveInformation: {
+   /**完善信息 */
+   improveInformation: {
       url: userUrl + 'improveInformation',
       method: 'POST'
    },
@@ -26,7 +28,23 @@ const serviceURL = {
       url: baseUrl + 'checkPhone',
       method: 'GET'
    },
+   //#endregion
 
+
+   //#region friend模块
+   /**friend申请 */
+   friendRequest: {
+      url: friendUrl + 'friendRequest',
+      method: 'POST'
+   },
+   /**好友申请列表 */
+   getFriendRequest: {
+      url: friendUrl + 'getFriendRequest',
+      method: 'GET'
+   },
+   //#endregion
+
+   //#region 股帮新闻模块
    /**股帮新闻列表 */
    gbList: {
       url: "https://admin.gbhome.com/api/v4/common/3in1/discovery",
@@ -37,5 +55,6 @@ const serviceURL = {
       url: "https://admin.gbhome.com/api/common/zlArticle/detail/",
       method: 'GET'
    },
+   //#endregion
 }
 export default serviceURL;

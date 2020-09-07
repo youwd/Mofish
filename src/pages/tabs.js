@@ -10,8 +10,9 @@ import MyScreen from 'pages/my';
 import { queryLastLoginInfo } from 'utils/realm';
 import { createSocket, destorySocket } from 'utils/socket';
 
-import store from 'store/index'
-import { socketChange, userInfoChange } from 'store/actionCreatores'
+import store from 'store/index';
+import { userInfoChange } from 'store/actionCreatores';
+import { getFriendRequest } from 'api/friendServive';
 
 const log = console.log;
 
@@ -19,23 +20,23 @@ const log = console.log;
 const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
 
-    const [uid, setUid] = useState();
-
-
     useEffect(() => {
         // 初始化
         const userInfo = queryLastLoginInfo();
         if (!userInfo) return;
         const _uid = userInfo.uid;
-        setUid(_uid);
 
         // store 中更新全局用户信息
         userInfoChange(userInfo);
 
-
+        // 创建socket连接
         createSocket(_uid, { U: 111 });
 
+        // 查找好友申请列表
+        getFriendRequest(_uid);
+
         return () => {
+            // 退出时销毁socket连接
             destorySocket();
             log("off---------");
         };
