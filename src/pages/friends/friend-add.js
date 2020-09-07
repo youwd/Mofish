@@ -31,7 +31,7 @@ const FriendAddPage = ({ navigation }) => {
     }
 
     const onSubmitEditing = () => {
-        console.log(account);
+        // console.log(account);
         navigation.navigate('friendDetail', account);
     }
     return (

@@ -51,7 +51,7 @@ function TabsStackScreen({ navigation, route }) {
         });
         socket.on('connect', () => onConnectionStateUpdate(socket));
         socket.on('disconnect', () => console.log('disconnect!!!'));
-        socket.on('message', (content) => console.log(content));
+        socket.on('message', (content) => console.log('message:',content));
         socket.on('error', (e) => log('#error', e));
         
         // store 中更新全局socket信息

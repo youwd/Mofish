@@ -27,10 +27,10 @@ const FriendNewListPage = ({ navigation }) => {
                 throw err;
             }
             // contacts returned
-            console.log(JSON.stringify(contacts));
+            console.log("contacts:", JSON.stringify(contacts));
         })
     }
-    
+
     const goFriendDetail = () => {
         navigation.navigate('friendDetail', "account");
     }

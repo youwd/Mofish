@@ -43,10 +43,10 @@ const SignUpPage = ({ navigation }) => {
         }
         serviceYouni("registry", params)
             .then((res) => {
-                writeToRealm(UserInfoTabelName, res.data);
+                writeToRealm(UserInfoTabelName, { ...res.data, loginTime: new Date() });
                 navigation.push('improveImformation', res.data.uid);
             }, (error) => {
-                Alert.alert('注册失败，'+ error, [
+                Alert.alert('注册失败，' + error, [
                     {
                         text: '好的'
                     }
