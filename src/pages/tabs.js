@@ -8,7 +8,7 @@ import MyScreen from 'pages/my';
 
 // import io from 'socket.io-client';
 import { queryLastLoginInfo } from 'utils/realm';
-import { createSocket } from 'utils/socket';
+import { createSocket, destorySocket } from 'utils/socket';
 
 import store from 'store/index'
 import { socketChange, userInfoChange } from 'store/actionCreatores'
@@ -20,17 +20,7 @@ const TabStack = createBottomTabNavigator();
 function TabsStackScreen({ navigation, route }) {
 
     const [uid, setUid] = useState();
-    const onConnectionStateUpdate = (_socket) => {
-        console.log('#connect,', _socket.id);
-        // 记录该id的对话
-        const msgs = [];
 
-        // 监听自身 id 以实现 p2p 通讯
-        _socket.on(_socket.id, msg => {
-            console.log('#receive,', msg);
-            // msgs.push(msg.data.payload.msg);
-        });
-    }
 
     useEffect(() => {
         // 初始化
@@ -43,24 +33,10 @@ function TabsStackScreen({ navigation, route }) {
         userInfoChange(userInfo);
 
 
-        const socket = createSocket(_uid,{U:111});
-        socket.on('connect', () => onConnectionStateUpdate(socket));
-        socket.on('disconnect', () => console.log('disconnect!!!'));
-        socket.on('message', (content) => console.log('message:',content));
-        socket.on('error', (e) => log('#error', e));
-        
-        // store 中更新全局socket信息
-        // socketChange(socket);
+        createSocket(_uid, { U: 111 });
 
         return () => {
-            // 主动断开连接
-            socket.disconnect();
-            // 取消所有监听
-            socket.off('connect');
-            socket.off('message');
-            socket.off('disconnect');
-            socket.off('error');
-            socket.off(socket.id);
+            destorySocket();
             log("off---------");
         };
     }, []);
