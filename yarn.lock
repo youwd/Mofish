@@ -6282,6 +6282,11 @@ react-native-contacts@^5.2.7:
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.2.7.tgz#136e12d5311f17c4c839dd20dcf9012245999065"
   integrity sha512-fHcAlPbeEJuhCpH1ZBdHJ6r9sCzEGlas/k8wRCHGm6cmkMsY3jCrsEAZXT5o42dTCyldLDYM4Z7S1zlfO6K1ww==
 
+react-native-device-info@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-6.0.2.tgz#03317893bd6336b9ed2fe7a78d424737a441553f"
+  integrity sha512-Kx6ozWKkiPPvRhZDIL5jQ8zEZLlRT8hTovTaV+NgDc0tM+slBEnuEIgn0FXArHudO0qq2r+VDs4pUwMf6csGPg==
+
 react-native-gesture-handler@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.7.0.tgz#0ef74a5ba836832e497dc49eb1ce58baa6c617e5"

@@ -28,6 +28,7 @@
     "react-native": "0.63.2",
     "react-native-camera": "^3.38.0",
     "react-native-contacts": "^5.2.7",
+    "react-native-device-info": "^6.0.2",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-get-random-values": "^1.4.0",
     "react-native-htmlview": "^0.16.0",

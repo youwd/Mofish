@@ -8,6 +8,8 @@ import {
     Button,
     TouchableWithoutFeedback
 } from 'react-native'
+import { CommonActions } from '@react-navigation/native';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 /**带图标的输入框 */

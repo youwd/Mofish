@@ -18,6 +18,8 @@ import {
 
 //加密
 import MD5 from 'crypto-js/md5';
+// 获取设备ID
+import { getUniqueId } from 'react-native-device-info';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconInput from 'components/icon-input';
@@ -33,18 +35,18 @@ const SignUpPage = ({ navigation }) => {
     const [eyeOff, setEyeOff] = useState(true);
 
     realmDBPath();
-
     const registryClick = () => {
         const params = {
             phone: account,
             password: MD5(password).toString(),
+            uniqueId: getUniqueId()
         }
         serviceYouni("registry", params)
             .then((res) => {
                 writeToRealm(UserInfoTabelName, res.data);
                 navigation.push('improveImformation', res.data.uid);
             }, (error) => {
-                Alert.alert('注册失败，请联系管理员！', [
+                Alert.alert('注册失败，'+ error, [
                     {
                         text: '好的'
                     }
