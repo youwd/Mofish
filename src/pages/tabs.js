@@ -6,8 +6,10 @@ import HomeScreen from 'pages/home';
 import ChatScreen from 'pages/chat/chat';
 import MyScreen from 'pages/my';
 
-import io from 'socket.io-client';
-import { queryLastLoginInfo } from 'utils/realm'
+// import io from 'socket.io-client';
+import { queryLastLoginInfo } from 'utils/realm';
+import { createSocket } from 'utils/socket';
+
 import store from 'store/index'
 import { socketChange, userInfoChange } from 'store/actionCreatores'
 
@@ -40,22 +42,15 @@ function TabsStackScreen({ navigation, route }) {
         // store 中更新全局用户信息
         userInfoChange(userInfo);
 
-        const socket = io("http://127.0.0.1:7001", {
-            // 实际使用中可以在这里传递参数
-            query: {
-                room: 'demo',
-                userInfo: JSON.stringify({}),
-                userId: _uid
-            },
-            transports: ['websocket']
-        });
+
+        const socket = createSocket(_uid,{U:111});
         socket.on('connect', () => onConnectionStateUpdate(socket));
         socket.on('disconnect', () => console.log('disconnect!!!'));
         socket.on('message', (content) => console.log('message:',content));
         socket.on('error', (e) => log('#error', e));
         
         // store 中更新全局socket信息
-        socketChange(socket);
+        // socketChange(socket);
 
         return () => {
             // 主动断开连接

@@ -8,7 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Header from 'components/header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import store from 'store/index';
+// import store from 'store/index';
+import { getSocket } from 'utils/socket';
 
 const ChatDetailPage = ({ navigation }) => {
     const [socket, setSocket] = useState();
@@ -19,7 +20,7 @@ const ChatDetailPage = ({ navigation }) => {
     }
 
     useEffect(() => {
-        setSocket(store.getState().socket);
+        setSocket(getSocket());
         // const unsubscribe = store.subscribe(aaa1) //订阅Redux的状态
         // return () => {
         //     unsubscribe();
