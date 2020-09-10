@@ -1,5 +1,5 @@
-const baseUrl = 'http://127.0.0.1:7001/jiucai/v1/'
-
+const baseUrl = 'http://127.0.0.1:7001/jiucai/v1/';
+export const avatarUrl = "http://121.40.229.18/files/avatars/";
 const userUrl = baseUrl + 'user/';
 const friendUrl = baseUrl + 'friend/';
 
@@ -41,6 +41,10 @@ const serviceURL = {
    getFriendRequest: {
       url: friendUrl + 'getFriendRequest',
       method: 'GET'
+   },
+   friendRequestIsRead: {
+      url: friendUrl + 'friendRequestIsRead',
+      method: 'PATCH'
    },
    //#endregion
 

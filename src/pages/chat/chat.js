@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
     Text, StyleSheet, View,
@@ -8,19 +8,37 @@ import {
 import Header from 'components/header';
 import Search from 'components/search';
 
-
+import store from 'store/index'
 
 const ChatScreen = ({ navigation }) => {
+    const [iconLeftCount, setIconLeftCount] = useState(0);
 
     const leftClick = () => {
         navigation.navigate('friendList', 111)
     }
+
+    let currentValue = 0;
+    useEffect(() => {
+
+        const unsubscribe = store.subscribe(() => {
+            let previousValue = currentValue;
+            currentValue = store.getState().friendRequest.newCount;
+
+            if (previousValue !== currentValue) {
+                setIconLeftCount(currentValue);
+            }
+        }) //订阅Redux的状态
+        return () => {
+            unsubscribe();
+        }
+    }, []);
 
     return (
         <View style={styles.container}>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#559EDF', '#69B9E3']} >
                 <Header
                     iconLeftName="people-outline"
+                    iconLeftCount={iconLeftCount}
                     iconRightName="add"
                     titleText="消息"
                     leftClick={leftClick}

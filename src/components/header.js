@@ -6,6 +6,7 @@ import Search from './search';
 const Header = (
     {
         iconLeftName = "",
+        iconLeftCount = 0,
         iconRightName = "",
         iconColor = "#000",
         iconSize = 25,
@@ -20,9 +21,15 @@ const Header = (
         <>
             <SafeAreaView></SafeAreaView>
             <View style={styles.container}>
-                <TouchableOpacity onPress={leftClick}>
-                {iconLeftName ?
+                <TouchableOpacity onPress={leftClick} style={styles.leftIcon}>
+                    {iconLeftName ?
                         (<Ionicons name={iconLeftName} size={iconSize} color={iconColor} />) : null}
+
+                    {iconLeftCount !== 0 &&
+                        <View style={styles.count}>
+                            {/* <Text style={styles.countText}>{iconLeftCount}</Text> */}
+                        </View>
+                    }
                 </TouchableOpacity>
 
                 <Text style={{
@@ -56,10 +63,26 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 10
     },
-    viewUp: {
-        // backgroundColor: "#6554c5",
-        // flex: 1
+    leftIcon: {
+        // position: "relative",
+        flexDirection: "row"
     },
+    count: {
+        borderRadius: 3,
+        color: "#fff",
+        backgroundColor: "red",
+        width: 6,
+        height: 6,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+
+    },
+    countText: {
+        textAlign: "center",
+        fontSize: 8,
+        color: "#fff"
+    }
 })
 
 

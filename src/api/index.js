@@ -30,7 +30,7 @@ const serviceYouni = (type, data = {}, headers = {}, id = 'no') => {
 
     return new Promise((resolve, reject) => {
         axios(config).then((res) => {
-            // console.log(res)
+            // console.log(config,res)
             if (res.data.code.toString() === '200') {
                 resolve(res.data.data);
             } else {

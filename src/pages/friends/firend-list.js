@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
     Text, StyleSheet, View,
@@ -10,9 +10,32 @@ import Search from 'components/search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
+import store from 'store/index';
+import { ACTIONS, storeDispatch } from 'store/actions';
+import { friendRequestIsRead } from 'api/friendServive';
+import { avatarUrl } from 'api/url'
 
 const FriendListPage = ({ navigation }) => {
 
+    const [newFriendRequest, setNewFriendRequest] = useState(store.getState().friendRequest.list[0]);
+    const [newCount, setNewCount] = useState(store.getState().friendRequest.newCount);
+
+    let currentValue = newCount;
+    useEffect(() => {
+
+        const unsubscribe = store.subscribe(() => {
+            let previousValue = currentValue;
+            currentValue = store.getState().friendRequest.newCount;
+
+            if (previousValue !== currentValue) {
+                setNewFriendRequest(store.getState().friendRequest.list[0]);
+                setNewCount(currentValue);
+            }
+        }) //订阅Redux的状态
+        return () => {
+            unsubscribe();
+        }
+    }, []);
 
     const leftClick = () => {
         navigation.pop();
@@ -42,18 +65,40 @@ const FriendListPage = ({ navigation }) => {
 
             <View style={styles.itemContainerStyle}>
                 {/* <FlatList> */}
-                <TouchableOpacity style={styles.itemStyle} onPress={() => navigation.navigate('friendNewList', 111)}>
-                    <View style={[styles.itemIcon,{backgroundColor:"#FB9B51"}]}>
-                        <Ionicons name={"person-add-outline"} size={20} color={"#fff"} />
-                    </View>
-                    <View style={styles.itemText}>
-                        <Text style={styles.itemTitle}>新的朋友</Text>
-                    </View>
+                <TouchableOpacity  onPress={() => navigation.navigate('friendNewList', 111)}>
+                    {
+                        newCount === 0 ?
+                            <View style={styles.itemStyle}>
+                                <View style={[styles.itemIcon, { backgroundColor: "#FB9B51" }]}>
+                                    <Ionicons name={"person-add-outline"} size={20} color={"#fff"} />
+                                </View>
+                                <View style={styles.itemText}>
+                                    <Text style={styles.itemTitle}>新的朋友</Text>
+                                </View>
+                            </View>
+                            :
+                            <View style={styles.itemStyle}>
+                                <View style={styles.itemIcon}>
+                                    <Image
+                                        style={styles.avatar}
+                                        source={
+                                            {
+                                                uri: `${avatarUrl}/${newFriendRequest.requestAvatar}`,
+                                            }
+                                        }
+                                    />
+                                </View>
+                                <View style={styles.itemText}>
+                                    <Text style={styles.itemTitle}>{newFriendRequest.requestNickName}</Text>
+                                </View>
+                            </View>
+                    }
+
                 </TouchableOpacity>
 
 
                 <TouchableOpacity style={styles.itemStyle}>
-                    <View style={[styles.itemIcon,{backgroundColor:"#5AC178"}]}>
+                    <View style={[styles.itemIcon, { backgroundColor: "#5AC178" }]}>
                         <Ionicons name={"people-outline"} size={20} color={"#fff"} />
                     </View>
                     <View style={[styles.itemText, { borderBottomWidth: 0 }]}>
@@ -82,14 +127,14 @@ const FriendListPage = ({ navigation }) => {
                         style={styles.avatar}
                         source={require('assets/images/avatar/avatar1.png')}
                     />
-                    <View style={[styles.itemText, { borderBottomWidth: 1 }]}>
+                    <View style={[styles.itemText, { borderBottomWidth: 0 }]}>
                         <Text style={styles.itemTitle}>小瓶子</Text>
 
                     </View>
                 </TouchableOpacity>
                 {/* </FlatList> */}
             </View>
-        </View>
+        </View >
     )
 }
 
@@ -125,12 +170,12 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 10,
-        justifyContent:"center",
-        alignItems:"center"
+        justifyContent: "center",
+        alignItems: "center"
     },
     avatar: {
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         borderRadius: 10,
     },
     itemText: {

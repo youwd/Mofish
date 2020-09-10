@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
     Text, StyleSheet, View,
@@ -12,7 +12,34 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // 获取手机通讯录
 import Contacts from 'react-native-contacts';
 
+import store from 'store/index';
+import { ACTIONS, storeDispatch } from 'store/actions';
+import { friendRequestIsRead } from 'api/friendServive';
+
+
 const FriendNewListPage = ({ navigation }) => {
+    const [friendRequestList, setFriendRequestList] = useState([]);
+    let currentValue = 0;
+
+    useEffect(() => {
+        // 进来的时候列表设为已读
+        friendRequestIsRead(store.getState().userInfo.uid);
+
+        const unsubscribe = store.subscribe(() => {
+            let previousValue = currentValue;
+            currentValue = store.getState().friendRequest.list.length;
+
+            if (previousValue !== currentValue) {
+                setFriendRequestList(store.getState().friendRequest.list);
+            }
+        }) //订阅Redux的状态
+        return () => {
+            unsubscribe();
+            // 出去的时候列表设为已读，防止新的数据进来没清掉
+            friendRequestIsRead(store.getState().userInfo.uid);
+        }
+    }, []);
+
 
     const leftClick = () => {
         navigation.pop();

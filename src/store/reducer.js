@@ -1,18 +1,20 @@
-import { CHANGE_SOCKET, CHANGE_USERINFO } from './actionTypes'
+import { ACTIONS } from './actions'
 
 const defaultState = {
     inputValue: 'Write Something',
     userInfo: {},
-    socket: {}
+    friendRequest: {
+        newCount:0,
+        list:[]
+    }
 }  //默认数据
 export default (state = defaultState, action) => {  //就是一个方法函数
     switch (action.type) {
-
-        case CHANGE_SOCKET:
+        case ACTIONS.FRIEND_REQUEST:
             return Object.assign({}, state, {
-                socket: action.value
+                friendRequest: action.value
             })
-        case CHANGE_USERINFO:
+        case ACTIONS.CHANGE_USERINFO:
             return Object.assign({}, state, {
                 userInfo: action.value
             })

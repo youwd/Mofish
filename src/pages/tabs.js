@@ -11,7 +11,7 @@ import { queryLastLoginInfo } from 'utils/realm';
 import { createSocket, destorySocket } from 'utils/socket';
 
 import store from 'store/index';
-import { userInfoChange } from 'store/actionCreatores';
+import { ACTIONS, storeDispatch } from 'store/actions';
 import { getFriendRequest } from 'api/friendServive';
 
 const log = console.log;
@@ -27,7 +27,7 @@ function TabsStackScreen({ navigation, route }) {
         const _uid = userInfo.uid;
 
         // store 中更新全局用户信息
-        userInfoChange(userInfo);
+        storeDispatch(ACTIONS.CHANGE_USERINFO,userInfo);
 
         // 创建socket连接
         createSocket(_uid, { U: 111 });

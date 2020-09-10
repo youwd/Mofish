@@ -1,4 +1,6 @@
 import io from 'socket.io-client';
+import store from 'store/index';
+import { ACTIONS, storeDispatch } from 'store/actions';
 
 
 const socketURL = 'http://127.0.0.1:7001';
@@ -13,6 +15,16 @@ const onConnectionStateUpdate = (_socket) => {
     // 监听自身 id 以实现 p2p 通讯
     _socket.on(_socket.id, msg => {
         console.log('#receive,', msg);
+        switch (msg.type) {
+            case "FRIEND_REQUEST":
+                const friendRequest = store.getState().friendRequest;
+                friendRequest.newCount++;
+                friendRequest.list.unshift(msg.data);
+                storeDispatch(ACTIONS.FRIEND_REQUEST, friendRequest);
+                break;
+            default:
+                break;
+        }
         // msgs.push(msg.data.payload.msg);
     });
 }
