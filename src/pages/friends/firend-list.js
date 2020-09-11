@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import store from 'store/index';
 import { ACTIONS, storeDispatch } from 'store/actions';
 import { friendRequestIsRead } from 'api/friendServive';
-import { avatarUrl } from 'api/url'
+import { avatarUrl } from 'api/url';
 
 const FriendListPage = ({ navigation }) => {
 
@@ -65,7 +65,7 @@ const FriendListPage = ({ navigation }) => {
 
             <View style={styles.itemContainerStyle}>
                 {/* <FlatList> */}
-                <TouchableOpacity  onPress={() => navigation.navigate('friendNewList', 111)}>
+                <TouchableOpacity onPress={() => navigation.navigate('friendNewList', 111)}>
                     {
                         newCount === 0 ?
                             <View style={styles.itemStyle}>
@@ -84,12 +84,19 @@ const FriendListPage = ({ navigation }) => {
                                         source={
                                             {
                                                 uri: `${avatarUrl}/${newFriendRequest.requestAvatar}`,
+                                                cache: 'force-cache'
                                             }
                                         }
                                     />
                                 </View>
                                 <View style={styles.itemText}>
-                                    <Text style={styles.itemTitle}>{newFriendRequest.requestNickName}</Text>
+                                    <View>
+                                        <Text style={styles.itemTitle}>{newFriendRequest.requestNickName}</Text>
+                                        <Text style={styles.itemRemark}>{newFriendRequest.remark}</Text>
+                                    </View>
+                                    <View style={styles.newCount}>
+                                        <Text style={styles.newCountText}>{newCount}</Text>
+                                    </View>
                                 </View>
                             </View>
                     }
@@ -192,6 +199,26 @@ const styles = StyleSheet.create({
     itemTitle: {
         fontWeight: "400",
         fontSize: 16,
+    },
+    itemRemark: {
+        fontSize: 12,
+        color: "#777"
+    },
+    newCount: {
+        borderRadius: 10,
+        color: "#fff",
+        backgroundColor: "red",
+        width: 20,
+        height: 20,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 3
+    },
+    newCountText: {
+        textAlign: "center",
+        fontSize: 10,
+        color: "#fff"
     }
 
 })

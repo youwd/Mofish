@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
     Text, StyleSheet, View,
-    TouchableOpacity,
-    Image, FlatList
+    TouchableOpacity, FlatList,
+    Image, ScrollView
 } from 'react-native';
 import Header from 'components/header';
 import Search from 'components/search';
@@ -15,10 +15,11 @@ import Contacts from 'react-native-contacts';
 import store from 'store/index';
 import { ACTIONS, storeDispatch } from 'store/actions';
 import { friendRequestIsRead } from 'api/friendServive';
+import { avatarUrl } from 'api/url';
 
 
 const FriendNewListPage = ({ navigation }) => {
-    const [friendRequestList, setFriendRequestList] = useState([]);
+    const [friendRequestList, setFriendRequestList] = useState(store.getState().friendRequest.list);
     let currentValue = 0;
 
     useEffect(() => {
@@ -27,12 +28,15 @@ const FriendNewListPage = ({ navigation }) => {
 
         const unsubscribe = store.subscribe(() => {
             let previousValue = currentValue;
-            currentValue = store.getState().friendRequest.list.length;
+            const _friendRequestList = store.getState().friendRequest.list;
+            currentValue = _friendRequestList.length;
+            // console.log("friendRequestListcurrentValue,", currentValue, previousValue);
 
             if (previousValue !== currentValue) {
-                setFriendRequestList(store.getState().friendRequest.list);
+                setFriendRequestList([..._friendRequestList]);
             }
         }) //订阅Redux的状态
+
         return () => {
             unsubscribe();
             // 出去的时候列表设为已读，防止新的数据进来没清掉
@@ -48,6 +52,7 @@ const FriendNewListPage = ({ navigation }) => {
         navigation.navigate('friendAdd');
     }
 
+    /**获取手机联系人 */
     const getContacts = () => {
         Contacts.getAll((err, contacts) => {
             if (err) {
@@ -60,6 +65,38 @@ const FriendNewListPage = ({ navigation }) => {
 
     const goFriendDetail = () => {
         navigation.navigate('friendDetail', "account");
+    }
+
+
+    /**
+     * 渲染好友请求列表
+     */
+    const renderFriendRequestList = ({ item }) => {
+        console.log("231312", item);
+        return (
+            <View style={styles.itemContainerStyle}>
+                <TouchableOpacity onPress={goFriendDetail}>
+                    <View style={styles.itemStyle}>
+                        <Image
+                            style={styles.avatar}
+                            source={
+                                {
+                                    uri: `${avatarUrl}/${item.requestAvatar}`,
+                                    cache: 'force-cache'
+                                }
+                            }
+                        />
+                        <View style={styles.itemLeft}>
+                            <Text style={styles.itemTitle}>小瓶子</Text>
+                            <Text style={styles.itemText}>消息内容....</Text>
+                        </View>
+                        <View style={styles.itemRight}>
+                            <Text style={styles.itemRightLabel}>查看</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     return (
@@ -76,34 +113,29 @@ const FriendNewListPage = ({ navigation }) => {
                 />
             </LinearGradient>
 
-            <View style={styles.searchStyle}>
-                <Search />
-            </View>
 
-            <View style={styles.addressBookStyle}>
-                <TouchableOpacity onPress={getContacts}>
-                    <Ionicons name="phone-portrait-outline" style={styles.addressBookIconStyle}></Ionicons>
-                    <Text style={styles.addressBookTextStyle}>添加手机联系人</Text>
-                </TouchableOpacity>
-            </View>
 
-            <View style={styles.itemContainerStyle}>
-                <TouchableOpacity onPress={goFriendDetail}>
-                    <View style={styles.itemStyle}>
-                        <Image
-                            style={styles.avatar}
-                            source={require('assets/images/avatar/avatar1.png')}
-                        />
-                        <View style={styles.itemLeft}>
-                            <Text style={styles.itemTitle}>小瓶子</Text>
-                            <Text style={styles.itemText}>消息内容....</Text>
+            <FlatList
+                ListHeaderComponent={
+                    <>
+                        <View style={styles.searchStyle}>
+                            <Search />
                         </View>
-                        <View style={styles.itemRight}>
-                            <Text style={styles.itemRightLabel}>查看</Text>
+
+                        <View style={styles.addressBookStyle}>
+                            <TouchableOpacity onPress={getContacts}>
+                                <Ionicons name="phone-portrait-outline" style={styles.addressBookIconStyle}></Ionicons>
+                                <Text style={styles.addressBookTextStyle}>添加手机联系人</Text>
+                            </TouchableOpacity>
                         </View>
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    </>}
+
+                data={friendRequestList}
+                renderItem={renderFriendRequestList}
+                style={styles.firendListStyle}
+                keyExtractor={(item) => item.id}
+            />
+
         </View>
     )
 }
@@ -111,8 +143,8 @@ const FriendNewListPage = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         height: "100%",
-        backgroundColor: "#f3f3f3"
-
+        backgroundColor: "#f3f3f3",
+        flex: 1
     },
     searchStyle: {
         marginTop: 10,
@@ -129,7 +161,7 @@ const styles = StyleSheet.create({
     addressBookStyle: {
         paddingVertical: 10,
         backgroundColor: "#fff",
-        marginTop: 10
+        marginVertical: 10
     },
     addressBookIconStyle: {
         textAlign: "center",
@@ -142,10 +174,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 10
     },
+    firendListStyle: {
+        // marginTop: 10,
+    },
     itemContainerStyle: {
-        marginTop: 10,
         padding: 10,
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderColor: "#E3E3E3",
     },
     itemStyle: {
         flexDirection: "row",

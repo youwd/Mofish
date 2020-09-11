@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
 
     detailContainer: {
-        marginTop: 30
+        // marginTop: 10
     },
     avatarItem: {
         flexDirection: "row",
